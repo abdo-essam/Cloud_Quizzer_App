@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'core/bloc_observer.dart';
 import 'core/routes/app_routing.dart';
 import 'core/routes/routes.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
   runApp(MyApp(
     appRouting: AppRouting(),
   ));

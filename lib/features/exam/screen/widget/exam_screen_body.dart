@@ -1,0 +1,198 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../core/functions/show_back_alert_dialog.dart';
+import '../../../../core/models/questions.dart';
+import '../../../../core/routes/routes.dart';
+import '../../manager/exam_cubit.dart';
+import 'answer_button.dart';
+import 'count_down.dart';
+
+class ExamScreenBody extends StatefulWidget {
+  const ExamScreenBody({super.key, required this.questions});
+
+  final List<Question> questions;
+
+  @override
+  State<ExamScreenBody> createState() => _ExamScreenBodyState();
+}
+
+class _ExamScreenBodyState extends State<ExamScreenBody> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ExamCubit>().index = 0;
+  }
+
+  void navToResult() {
+    Navigator.of(context).popAndPushNamed(
+      Routes.resultScreen,
+      arguments: {
+        'score': context.read<ExamCubit>().score,
+        'endIndex': context.read<ExamCubit>().index,
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CountDown(
+                    quizTime: 1,
+                    timeOut: () {
+                      // if time out then the reminder questions will be incorrect
+                      // then make the index equal to the last question to calculating the score for overall
+
+                      if (context.read<ExamCubit>().index != 0) {
+                        context.read<ExamCubit>().index =
+                            widget.questions.length - 1;
+                      }
+                      navToResult();
+                    },
+                  ),
+                  Text(
+                    'Q.${context.read<ExamCubit>().index + 1}/${widget.questions.length}',
+                    style: GoogleFonts.quicksand(
+                      textStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
+                  Text(
+                    widget.questions[context.read<ExamCubit>().index]
+                        .questionText,
+                    style: GoogleFonts.quicksand(
+                      textStyle: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
+                  // for loop to display the options
+                  for (int i = 0;
+                      i <
+                          widget.questions[context.read<ExamCubit>().index]
+                              .options.length;
+                      i++)
+                    AnswerButton(
+                      question:
+                          widget.questions[context.read<ExamCubit>().index],
+                      optionIndex: i,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        child: Column(
+          children: [
+            const Divider(
+              thickness: 1,
+              color: Colors.white,
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 19),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  onPressed: () async {
+                    bool shouldNavigateBack = await showBackAlertDialog(
+                        context, 'Do you want to Exit the Exam?');
+                    if (shouldNavigateBack) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_sharp,
+                    size: 15,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Expanded(
+                    child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 17),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  onPressed: () async {
+                    bool shouldNavigateBack = await showBackAlertDialog(
+                        context, 'Do you want to submit the exam ?');
+                    if (shouldNavigateBack) {
+                      navToResult();
+                    }
+                  },
+                  child: Text(
+                    'Complete',
+                    style: GoogleFonts.quicksand(
+                      textStyle: TextStyle(
+                          fontSize: 13.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ))
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
