@@ -1,6 +1,7 @@
 
+import 'package:cloudquizzer/core/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../features/home/screen/ui/home_screen.dart';
 
 
 
@@ -9,6 +10,9 @@ class AppRouting {
     final arguments = routeSettings.arguments;
 
     switch (routeSettings.name) {
+      case Routes.homeScreen:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+
 
 
       default:
