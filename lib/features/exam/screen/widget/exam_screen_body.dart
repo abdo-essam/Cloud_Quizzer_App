@@ -21,6 +21,7 @@ class ExamScreenBody extends StatefulWidget {
 }
 
 class _ExamScreenBodyState extends State<ExamScreenBody> {
+  final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
   @override
   void initState() {
     super.initState();
@@ -37,6 +38,10 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
     );
   }
 
+  void restartCountdown() {
+    _countdownKey.currentState?.restart();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +56,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CountDown(
+                    key: _countdownKey,
                     quizTime: 1,
                     timeOut: () {
                       // if time out then the reminder questions will be incorrect

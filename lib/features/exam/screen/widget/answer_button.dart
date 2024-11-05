@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,10 +42,10 @@ class AnswerButton extends StatelessWidget {
               'score': context.read<ExamCubit>().score,
               'endIndex': context.read<ExamCubit>().index,
             });
+          } else {
+            // go to next question
+            context.read<ExamCubit>().updateIndex();
           }
-
-          // go to next question
-          context.read<ExamCubit>().updateIndex();
         },
         style: ButtonStyle(
             elevation: const WidgetStatePropertyAll(0),

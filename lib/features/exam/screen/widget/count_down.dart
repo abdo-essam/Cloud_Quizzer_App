@@ -2,11 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 
-class CountDown extends StatelessWidget {
+class CountDown extends StatefulWidget {
   final int quizTime;
   final Function timeOut;
 
   const CountDown({super.key, required this.quizTime, required this.timeOut});
+
+  @override
+  CountDownState createState() => CountDownState();
+}
+
+class CountDownState extends State<CountDown> {
+  late DateTime _endTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _endTime = DateTime.now().add(Duration(minutes: widget.quizTime));
+  }
+
+  void restart() {
+    setState(() {
+      _endTime = DateTime.now().add(Duration(minutes: widget.quizTime));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +52,10 @@ class CountDown extends StatelessWidget {
             format: CountDownTimerFormat.minutesSeconds,
             enableDescriptions: false,
             colonsTextStyle: const TextStyle(color: Colors.white),
-            timeTextStyle: const TextStyle(
-              color: Colors.white,
-            ),
-            endTime: DateTime.now().add(
-              Duration(
-                minutes: quizTime,
-                seconds: 0,
-              ),
-            ),
+            timeTextStyle: const TextStyle(color: Colors.white),
+            endTime: _endTime,
             onEnd: () {
-              timeOut();
+              widget.timeOut();
             },
           ),
         ],
