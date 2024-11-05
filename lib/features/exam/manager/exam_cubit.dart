@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +13,7 @@ class ExamCubit extends Cubit<ExamState> {
   int score = 0;
   Color optionButtonColor = Colors.red;
   List<Question> questions = [];
+  List<Question> incorrectQuestionsList = [];
 
   Future<void> getQuestionsFromDatabase() async {
     questions = await AppDatabase.instance.getQuestions();
@@ -30,12 +30,9 @@ class ExamCubit extends Cubit<ExamState> {
   }
 
   updateIndex() async {
-    if (index < questions.length - 1) {
-      index++;
-      emit(ExamQuestionIndexUpdated(questions: questions));
-    } else {
-      emit(ExamQuestionLastIndexUpdated());
-    }
+    print('index: $index length: ${questions.length}');
+    index++;
+    emit(ExamQuestionIndexUpdated(questions: questions));
   }
 
   changeOptionButtonColor(Color color) {
@@ -46,5 +43,10 @@ class ExamCubit extends Cubit<ExamState> {
   increaseScore() {
     score++;
     emit(ExamIncreaseScore());
+  }
+
+  void addFailedQuestions(Question incorrectQuestion) {
+    incorrectQuestionsList.add(incorrectQuestion);
+    emit(ExamAddedFailedQuestion(incorrectQuestionsList));
   }
 }

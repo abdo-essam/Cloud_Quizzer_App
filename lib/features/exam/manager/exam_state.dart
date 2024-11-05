@@ -1,5 +1,3 @@
-
-
 import '../../../core/models/questions.dart';
 
 abstract class ExamState {}
@@ -18,7 +16,6 @@ class ExamQuestionIndexUpdated extends ExamState {
   List<Question> questions;
 
   ExamQuestionIndexUpdated({required this.questions});
-
 }
 
 class ExamQuestionLastIndexUpdated extends ExamState {}
@@ -32,3 +29,8 @@ class ExamGetAllQuestions extends ExamState {
 }
 
 class ExamChangeOptionButtonColor extends ExamState {}
+
+class ExamAddedFailedQuestion extends ExamState {
+  final List<Question> failedQuestions;
+  ExamAddedFailedQuestion(this.failedQuestions);
+}

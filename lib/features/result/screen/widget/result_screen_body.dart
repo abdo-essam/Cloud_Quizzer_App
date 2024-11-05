@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../../core/models/questions.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../home/screen/ui/home_screen.dart';
-import '../../../review_question/screen/ui/review_question_screen.dart';
+import '../../../review/screen/ui/review_question_screen.dart';
 
 class ResultScreenBody extends StatefulWidget {
   const ResultScreenBody({super.key});
@@ -16,6 +18,7 @@ class ResultScreenBody extends StatefulWidget {
 class _ResultScreenBodyState extends State<ResultScreenBody> {
   late final int score;
   late final int endIndex;
+  late final List<Question> incorrectQuestions;
 
   @override
   void didChangeDependencies() {
@@ -24,8 +27,9 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     score = args['score'];
     endIndex = args['endIndex'];
+    incorrectQuestions = args['incorrectQuestions'];
+    //print(incorrectQuestions[0].questionText);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +157,11 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ReviewQuestionScreen(),
-                        ),
+                      Navigator.of(context).popAndPushNamed(
+                        Routes.reviewQuestionScreen,
+                        arguments: {
+                          'incorrectQuestions': incorrectQuestions,
+                        },
                       );
                     },
                     child: Text(

@@ -6,7 +6,7 @@ import '../../features/exam/manager/exam_cubit.dart';
 import '../../features/exam/screen/ui/exam_screen.dart';
 import '../../features/home/screen/ui/home_screen.dart';
 import '../../features/result/screen/ui/result_screen.dart';
-import '../../features/review_question/screen/ui/review_question_screen.dart';
+import '../../features/review/screen/ui/review_question_screen.dart';
 
 class AppRouting {
   Route? generateRoutes(RouteSettings routeSettings) {
@@ -31,6 +31,7 @@ class AppRouting {
       case Routes.reviewQuestionScreen:
         return MaterialPageRoute(
           builder: (_) => const ReviewQuestionScreen(),
+          settings: RouteSettings(arguments: arguments),
         );
 
       default:

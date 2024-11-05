@@ -33,13 +33,7 @@ class ExamScreenBlocBuilder extends StatelessWidget {
           return getQuestionScreen(state.questions);
         }
 
-        if (state is ExamQuestionLastIndexUpdated) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        }
+
 
         return const Text('Something went wrong');
       },

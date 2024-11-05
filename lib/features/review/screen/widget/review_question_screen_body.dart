@@ -1,8 +1,25 @@
+import 'package:cloudquizzer/core/models/questions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ReviewQuestionScreenBody extends StatelessWidget {
+class ReviewQuestionScreenBody extends StatefulWidget {
   const ReviewQuestionScreenBody({super.key});
+
+  @override
+  State<ReviewQuestionScreenBody> createState() =>
+      _ReviewQuestionScreenBodyState();
+}
+
+class _ReviewQuestionScreenBodyState extends State<ReviewQuestionScreenBody> {
+  late final List<Question> incorrectQuestions;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    incorrectQuestions = args['incorrectQuestions'];
+    print("incorrectQuestions: ${incorrectQuestions.length}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +32,9 @@ class ReviewQuestionScreenBody extends StatelessWidget {
             centerTitle: true,
             backgroundColor: Colors.black,
             title: const Text(
-              "Questions With Answers",
-              style: TextStyle(color: Colors.white),
+              "Incorrect Questions",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
           body: SingleChildScrollView(

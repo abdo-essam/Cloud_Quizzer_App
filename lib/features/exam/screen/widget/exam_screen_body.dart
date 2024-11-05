@@ -23,18 +23,13 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
   //  Manages the CountDown state, letting it persist across question updates.
   final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<ExamCubit>().index = 0;
-  }
-
   void navToResult() {
     Navigator.of(context).popAndPushNamed(
       Routes.resultScreen,
       arguments: {
         'score': context.read<ExamCubit>().score,
         'endIndex': context.read<ExamCubit>().index,
+        'incorrectQuestions': context.read<ExamCubit>().incorrectQuestionsList,
       },
     );
   }
@@ -115,8 +110,10 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                           widget.questions[context.read<ExamCubit>().index]
                               .options.length;
                       i++)
-                    AnswerButton(question: widget.questions[context.read<ExamCubit>().index], optionIndex: i
-                    ),
+                    AnswerButton(
+                        question:
+                            widget.questions[context.read<ExamCubit>().index],
+                        optionIndex: i),
                 ],
               ),
             ),

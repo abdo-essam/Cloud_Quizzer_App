@@ -47,17 +47,21 @@ class _AnswerButtonState extends State<AnswerButton> {
               backgroundButtonColor = Colors.green; // Correct answer
               context.read<ExamCubit>().increaseScore();
             } else {
+              // add Failed Question to the list
+              context.read<ExamCubit>().addFailedQuestions(widget.question);
+              print(context.read<ExamCubit>().incorrectQuestionsList.length);
               backgroundButtonColor = Colors.red; // Incorrect answer
             }
           });
 
-          // check if it is the last question
+          // if it is the last question then navigate to the result screen
           if (context.read<ExamCubit>().index ==
               context.read<ExamCubit>().questions.length - 1) {
             Navigator.of(context)
                 .popAndPushNamed(Routes.resultScreen, arguments: {
               'score': context.read<ExamCubit>().score,
               'endIndex': context.read<ExamCubit>().index,
+              'incorrectQuestions': context.read<ExamCubit>().incorrectQuestionsList
             });
           } else {
             // go to next question
