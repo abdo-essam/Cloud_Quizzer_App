@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/helper/constants/constants.dart';
+import '../../../../../core/models/certification.dart';
 import 'certification_item.dart';
 
 class CertificationItemListView extends StatelessWidget {
-  const CertificationItemListView({super.key});
+  CertificationItemListView({super.key});
+
+  // get certification data from Constants
+  final List<Certification> certificationsDataList =
+      Constants.certificationsData;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +18,9 @@ class CertificationItemListView extends StatelessWidget {
       height: 530.h,
       child: ListView.builder(
           itemBuilder: (context, index) {
-            return const CertificationItem();
+            return CertificationItem(certification: certificationsDataList[index]);
           },
-          itemCount: 10),
+          itemCount: 3),
     );
   }
 }

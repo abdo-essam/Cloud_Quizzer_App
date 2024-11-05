@@ -3,13 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'certification_item/certification_item_list_view.dart';
-import 'home_tob_bar.dart';
+import 'home_welcome_top_bar.dart';
 
 class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // container is outside the safe area to show the status bar
     return Container(
       color: Colors.black,
       child: SafeArea(
@@ -18,14 +19,14 @@ class HomeScreenBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HomeTobBar(),
+            const HomeWelcomeTopBar(),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             Row(
               children: [
                 Text(
-                  "Please Select A Path",
+                  "Take Exam to Test Your Knowledge",
                   style: GoogleFonts.quicksand(
                       fontSize: 16.0.sp,
                       color: Colors.white,
@@ -44,7 +45,7 @@ class HomeScreenBody extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            const SingleChildScrollView(
+            SingleChildScrollView(
               child: CertificationItemListView(),
             ),
           ],
