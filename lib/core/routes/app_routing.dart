@@ -17,10 +17,12 @@ class AppRouting {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.examScreen:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => ExamCubit()..getQuestions(),
-                  child: const ExamScreen(),
-                ));
+          builder: (_) => BlocProvider(
+            create: (context) => ExamCubit()..getQuestions(),
+            child: const ExamScreen(),
+          ),
+          settings: RouteSettings(arguments: arguments),
+        );
 
       case Routes.resultScreen:
         return MaterialPageRoute(

@@ -1,3 +1,4 @@
+import 'package:cloudquizzer/core/models/certification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ class ExamScreenBody extends StatefulWidget {
 }
 
 class _ExamScreenBodyState extends State<ExamScreenBody> {
+
   //  Manages the CountDown state, letting it persist across question updates.
   final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
 
@@ -40,6 +42,8 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final Certification certification = args['certification'];
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
@@ -53,7 +57,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                 children: [
                   CountDown(
                     key: _countdownKey,
-                    quizTime: 1,
+                    quizTime: certification.examTime,
                     timeOut: () {
                       // if time out then the reminder questions will be incorrect
                       // then make the index equal to the last question to calculating the score for overall
@@ -65,8 +69,9 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                       navToResult();
                     },
                   ),
+                  // Text to display the question number
                   Text(
-                    'Q.${context.read<ExamCubit>().index + 1}/${widget.questions.length}',
+                    'Q.${context.read<ExamCubit>().index + 1}/${certification.numOfQuestions}',
                     style: GoogleFonts.quicksand(
                       textStyle: TextStyle(
                         fontSize: 14.sp,

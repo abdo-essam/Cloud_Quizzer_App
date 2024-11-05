@@ -19,7 +19,12 @@ class _CertificationItemState extends State<CertificationItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.examScreen);
+        Navigator.of(context).popAndPushNamed(
+          Routes.examScreen,
+          arguments: {
+            'certification': widget.certification,
+          },
+        );
       },
       child: Container(
         height: 140.h,
