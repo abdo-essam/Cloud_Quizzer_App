@@ -24,13 +24,18 @@ class ExamIncreaseScore extends ExamState {}
 
 class ExamGetAllQuestions extends ExamState {
   List<Question> questions;
-
   ExamGetAllQuestions({required this.questions});
+}
+
+class ExamGetCertificationQuestions extends ExamState {
+  List<Question> questions;
+  ExamGetCertificationQuestions({required this.questions});
 }
 
 class ExamChangeOptionButtonColor extends ExamState {}
 
 class ExamAddedFailedQuestion extends ExamState {
   final List<Question> failedQuestions;
+
   ExamAddedFailedQuestion(this.failedQuestions);
 }

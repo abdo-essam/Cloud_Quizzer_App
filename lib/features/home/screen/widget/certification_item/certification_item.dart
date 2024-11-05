@@ -52,6 +52,15 @@ class _CertificationItemState extends State<CertificationItem> {
                         color: Colors.black,
                       ),
                     ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      widget.certification.certificationCode,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
                   ],
                 ))
               ],
@@ -60,24 +69,31 @@ class _CertificationItemState extends State<CertificationItem> {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.info_outline,
-                      color: Colors.deepOrange, size: 20.0),
-                  SizedBox(width: 10.w),
-                  Text(
-                    "${widget.certification.numOfQuestions} Questions",
-                    style: GoogleFonts.quicksand(
-                        fontSize: 13.sp, color: Colors.black),
+                  Row(
+                    children: [
+                      const Icon(Icons.info_outline,
+                          color: Colors.deepOrange, size: 20.0),
+                      SizedBox(width: 10.w),
+                      Text(
+                        "${widget.certification.numOfQuestions} Questions",
+                        style: GoogleFonts.quicksand(
+                            fontSize: 13.sp, color: Colors.black),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 10.w),
-                  const Icon(Icons.timer_outlined,
-                      color: Colors.deepOrange, size: 20.0),
-                  SizedBox(width: 10.w),
-                  Text(
-                    "${widget.certification.examTime} Mins",
-                    style: GoogleFonts.quicksand(
-                        fontSize: 13, color: Colors.black),
+                  Row(
+                    children: [
+                      const Icon(Icons.timer_outlined,
+                          color: Colors.deepOrange, size: 20.0),
+                      SizedBox(width: 10.w),
+                      Text(
+                        "${widget.certification.examTime} Mins",
+                        style: GoogleFonts.quicksand(
+                            fontSize: 13, color: Colors.black),
+                      ),
+                    ],
                   ),
                 ],
               ),

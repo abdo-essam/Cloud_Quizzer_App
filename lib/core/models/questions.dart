@@ -3,12 +3,14 @@ class Question {
   final String questionText;
   final int answerIndex;
   final List<String> options;
+  final String certificationCode;
 
   Question({
     this.questionId,
     required this.questionText,
     required this.answerIndex,
     required this.options,
+    required this.certificationCode,
   });
 
   // Convert a Question object into a Map object for database insertion.
@@ -17,6 +19,7 @@ class Question {
       'question_text': questionText,
       'answer_index': answerIndex,
       'options': options.join(','),
+      'certification_code': certificationCode,
     };
   }
 
@@ -29,6 +32,7 @@ class Question {
       answerIndex: map['answer_index'],
       // Convert the stored string back to a list
       options: map['options'].split(','),
+      certificationCode: map['certification_code'],
     );
   }
 }

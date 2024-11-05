@@ -8,6 +8,7 @@ class Constants {
       examTime: 90,
       imagePath: 'assets/images/aws_cloud_practitioner_badge.png',
       cloudProvider: 'AWS',
+      certificationCode:'AWS-CCP'
     ),
 /*    Certification(
       certificationName: 'AWS Certified Solutions Architect - Associate',
@@ -15,6 +16,7 @@ class Constants {
       examTime: 130,
       imagePath: 'assets/images/aws_solutions_architect_associate_badge.png',
       cloudProvider: 'AWS',
+      certificationCode: 'AWS-SAA'
     ),*/
     Certification(
       certificationName: 'Microsoft Certified: Azure Fundamentals',
@@ -22,6 +24,7 @@ class Constants {
       examTime: 85,
       imagePath: 'assets/images/azure_fundamentals_badge.png',
       cloudProvider: 'Microsoft Azure',
+      certificationCode: 'AZ-900'
     ),
 /*    Certification(
       certificationName: 'Microsoft Certified: Azure Administrator Associate',
@@ -29,6 +32,7 @@ class Constants {
       examTime: 120,
       imagePath: 'assets/images/azure_administrator_badge.png',
       cloudProvider: 'Microsoft Azure',
+      certificationCode: 'AZ-104'
     ),*/
     Certification(
       certificationName: 'Google Associate Cloud Engineer',
@@ -36,6 +40,7 @@ class Constants {
       examTime: 120,
       imagePath: 'assets/images/google_associate_cloud_engineer_badge.png',
       cloudProvider: 'Google Cloud',
+      certificationCode: 'GCP-ACE'
     ),
 /*    Certification(
       certificationName: 'Google Professional Cloud Architect',
@@ -43,6 +48,7 @@ class Constants {
       examTime: 120,
       imagePath: 'assets/images/google_professional_cloud_architect_badge.png',
       cloudProvider: 'Google Cloud',
+      certificationCode: 'GCP-PCA'
     ),*/
   ];
 }

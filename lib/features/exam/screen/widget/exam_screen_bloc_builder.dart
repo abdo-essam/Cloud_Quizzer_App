@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,14 +32,19 @@ class ExamScreenBlocBuilder extends StatelessWidget {
           return getQuestionScreen(state.questions);
         }
 
-
-
         return const Text('Something went wrong');
       },
     );
   }
 
   Widget getQuestionScreen(List<Question> questions) {
+    if (questions.isEmpty) {
+      return const Center(
+        child: CircularProgressIndicator(
+          color: Colors.deepOrange,
+        ),
+      );
+    }
     return ExamScreenBody(questions: questions);
   }
 }

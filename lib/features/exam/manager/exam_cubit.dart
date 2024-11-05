@@ -11,7 +11,7 @@ class ExamCubit extends Cubit<ExamState> {
   static ExamCubit get(context) => BlocProvider.of<ExamCubit>(context);
   int index = 0;
   int score = 0;
-  Color optionButtonColor = Colors.red;
+  String certificationCode = 'AWS-CP';
   List<Question> questions = [];
   List<Question> incorrectQuestionsList = [];
 
@@ -19,6 +19,14 @@ class ExamCubit extends Cubit<ExamState> {
     questions = await AppDatabase.instance.getQuestions();
     emit(ExamGetAllQuestions(questions: questions));
   }
+
+/*
+  Future<void> getQuestionsFromDatabaseByCertification() async {
+    questions = await AppDatabase.instance.getQuestionsByCertification(certificationCode);
+    emit(ExamGetCertificationQuestions(questions: questions));
+  }
+*/
+
 
   Future<void> getQuestions() async {
     emit(ExamLoading());
@@ -29,15 +37,12 @@ class ExamCubit extends Cubit<ExamState> {
     }
   }
 
+
+
   updateIndex() async {
-    print('index: $index length: ${questions.length}');
+    //print('index: $index length: ${questions.length}');
     index++;
     emit(ExamQuestionIndexUpdated(questions: questions));
-  }
-
-  changeOptionButtonColor(Color color) {
-    optionButtonColor = color;
-    emit(ExamChangeOptionButtonColor());
   }
 
   increaseScore() {
