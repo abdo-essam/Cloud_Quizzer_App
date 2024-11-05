@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +20,9 @@ class ExamScreenBody extends StatefulWidget {
 }
 
 class _ExamScreenBodyState extends State<ExamScreenBody> {
+  //  Manages the CountDown state, letting it persist across question updates.
   final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
+
   @override
   void initState() {
     super.initState();
@@ -114,10 +115,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                           widget.questions[context.read<ExamCubit>().index]
                               .options.length;
                       i++)
-                    AnswerButton(
-                      question:
-                          widget.questions[context.read<ExamCubit>().index],
-                      optionIndex: i,
+                    AnswerButton(question: widget.questions[context.read<ExamCubit>().index], optionIndex: i
                     ),
                 ],
               ),

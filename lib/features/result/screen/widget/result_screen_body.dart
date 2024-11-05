@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,24 +14,23 @@ class ResultScreenBody extends StatefulWidget {
 }
 
 class _ResultScreenBodyState extends State<ResultScreenBody> {
-  late final Map<String, dynamic> args;
   late final int score;
   late final int endIndex;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final Map<String, dynamic> args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     score = args['score'];
     endIndex = args['endIndex'];
   }
 
+
   @override
   Widget build(BuildContext context) {
     double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
-
-    print('$percentage % $score  $endIndex  ');
+    print('percentage: $percentage score: $score endIndex: $endIndex');
 
     return Scaffold(
       backgroundColor: Colors.black,

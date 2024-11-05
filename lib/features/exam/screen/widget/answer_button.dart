@@ -8,31 +8,48 @@ import '../../../../core/models/questions.dart';
 import '../../../../core/routes/routes.dart';
 import '../../manager/exam_cubit.dart';
 
-class AnswerButton extends StatelessWidget {
-  const AnswerButton(
-      {super.key, required this.question, required this.optionIndex});
+class AnswerButton extends StatefulWidget {
+  const AnswerButton({
+    super.key,
+    required this.question,
+    required this.optionIndex,
+  });
 
   final int optionIndex;
   final Question question;
 
   @override
+  State<AnswerButton> createState() => _AnswerButtonState();
+}
+
+class _AnswerButtonState extends State<AnswerButton> {
+  // Default button color
+
+  @override
   Widget build(BuildContext context) {
+    // this function check if the answer for the first question is correct or not
+    ifCorrect() {
+      if (widget.question.answerIndex == widget.optionIndex) {
+        return Colors.green;
+      } else {
+        return Colors.red;
+      }
+    }
+
+    Color backgroundButtonColor = ifCorrect();
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: ElevatedButton(
         onPressed: () {
-/*
-          if (question.answerIndex == optionIndex) {
-            context.read<ExamCubit>().changeOptionButtonColor(Colors.green);
-          } else {
-            context.read<ExamCubit>().changeOptionButtonColor(Colors.red);
-          }
-*/
-
-          // check if the answer is correct
-          if (question.answerIndex == optionIndex) {
-            context.read<ExamCubit>().increaseScore();
-          }
+          // Update button color based on answer correctness
+          setState(() {
+            if (widget.question.answerIndex == widget.optionIndex) {
+              backgroundButtonColor = Colors.green; // Correct answer
+              context.read<ExamCubit>().increaseScore();
+            } else {
+              backgroundButtonColor = Colors.red; // Incorrect answer
+            }
+          });
 
           // check if it is the last question
           if (context.read<ExamCubit>().index ==
@@ -51,7 +68,7 @@ class AnswerButton extends StatelessWidget {
             elevation: const WidgetStatePropertyAll(0),
             padding: const WidgetStatePropertyAll(
                 EdgeInsets.symmetric(vertical: 25, horizontal: 15)),
-            backgroundColor: getColor(Colors.white, Colors.deepOrange),
+            backgroundColor: getColor(Colors.white, backgroundButtonColor),
             foregroundColor: getColor(Colors.black, Colors.white),
             shape: WidgetStateProperty.all(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -62,7 +79,7 @@ class AnswerButton extends StatelessWidget {
           children: [
             Text(
               // select the option by index in the for loop
-              question.options[optionIndex],
+              widget.question.options[widget.optionIndex],
               style: GoogleFonts.quicksand(
                 fontSize: 12.sp,
               ),
