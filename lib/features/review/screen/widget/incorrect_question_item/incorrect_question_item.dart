@@ -54,13 +54,15 @@ class _IncorrectQuestionItemState extends State<IncorrectQuestionItem> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text("Correct: ",
+                    const Text("Correct Answer : ",
                         style: TextStyle(
                             color: Colors.green, fontWeight: FontWeight.bold)),
-                    Text(
-                        widget.incorrectQuestion
-                            .options[widget.incorrectQuestion.answerIndex],
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: Text(
+                          widget.incorrectQuestion
+                              .options[widget.incorrectQuestion.answerIndex].substring(3),
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                    ),
                   ]),
             ],
           )),

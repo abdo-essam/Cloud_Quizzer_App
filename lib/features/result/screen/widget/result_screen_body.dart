@@ -33,7 +33,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
   @override
   Widget build(BuildContext context) {
     double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
-    print('percentage: $percentage score: $score endIndex: $endIndex');
+    // print('percentage: $percentage score: $score endIndex: $endIndex');
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -51,7 +51,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
               child: Text(
                 endIndex != 0
                     ? '$score out of ${endIndex + 1} are correct'
-                    : '$score out of 0  are correct',
+                    : '$score out of 0 are correct',
                 style: GoogleFonts.quicksand(
                   textStyle: TextStyle(
                       color: Colors.white,
@@ -76,14 +76,28 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
             SizedBox(
               height: 20.h,
             ),
+            if (percentage >= 70)
             Text(
               'Congratulations',
               style: GoogleFonts.quicksand(
                 textStyle: TextStyle(
-                    color: Colors.white,
+                    color: Colors.green,
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w500),
               ),
+            ),
+            if (percentage < 70)
+            Text(
+              'Better luck next time',
+              style: GoogleFonts.quicksand(
+                textStyle: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
             ),
             Text(
               'You have got $score Points',
