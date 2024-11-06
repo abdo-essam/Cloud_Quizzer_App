@@ -49,7 +49,7 @@ class CountDownState extends State<CountDown> {
             ),
           ),
           TimerCountdown(
-            format: CountDownTimerFormat.minutesSeconds,
+            format: CountDownTimerFormat.hoursMinutesSeconds,
             enableDescriptions: false,
             colonsTextStyle: const TextStyle(color: Colors.white),
             timeTextStyle: const TextStyle(color: Colors.white),

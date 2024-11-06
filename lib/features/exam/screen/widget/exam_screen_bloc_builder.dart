@@ -1,3 +1,4 @@
+import 'package:cloudquizzer/core/widgets/error_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,8 @@ class ExamScreenBlocBuilder extends StatelessWidget {
           return getQuestionScreen(state.questions);
         }
 
-        return const Text('Something went wrong');
+        return const ErrorScreen();
+
       },
       listener: (BuildContext context, ExamState state) {
         if (state is ExamError) {

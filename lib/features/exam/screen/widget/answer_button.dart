@@ -9,22 +9,21 @@ import '../../../../core/routes/routes.dart';
 import '../../manager/exam_cubit.dart';
 
 class AnswerButton extends StatefulWidget {
-  const AnswerButton({
-    super.key,
-    required this.question,
-    required this.optionIndex,
-  });
+  const AnswerButton(
+      {super.key,
+      required this.question,
+      required this.optionIndex,
+      required this.numOFQuestions});
 
   final int optionIndex;
   final Question question;
+  final int numOFQuestions;
 
   @override
   State<AnswerButton> createState() => _AnswerButtonState();
 }
 
 class _AnswerButtonState extends State<AnswerButton> {
-  // Default button color
-
   @override
   Widget build(BuildContext context) {
     // this function check if the answer for the first question is correct or not
@@ -55,13 +54,13 @@ class _AnswerButtonState extends State<AnswerButton> {
           });
 
           // if it is the last question then navigate to the result screen
-          if (context.read<ExamCubit>().index ==
-              context.read<ExamCubit>().questions.length - 1) {
+          if (context.read<ExamCubit>().index == widget.numOFQuestions - 1) {
             Navigator.of(context)
                 .popAndPushNamed(Routes.resultScreen, arguments: {
               'score': context.read<ExamCubit>().score,
               'endIndex': context.read<ExamCubit>().index,
-              'incorrectQuestions': context.read<ExamCubit>().incorrectQuestionsList
+              'incorrectQuestions':
+                  context.read<ExamCubit>().incorrectQuestionsList
             });
           } else {
             // go to next question
@@ -81,11 +80,14 @@ class _AnswerButtonState extends State<AnswerButton> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              // select the option by index in the for loop
-              widget.question.options[widget.optionIndex],
-              style: GoogleFonts.quicksand(
-                fontSize: 12.sp,
+            // expand the text to fill the whole width if option text is too long
+            Expanded(
+              child: Text(
+                // select the option by index in the for loop
+                widget.question.options[widget.optionIndex],
+                style: GoogleFonts.quicksand(
+                  fontSize: 12.sp,
+                ),
               ),
             ),
             const Icon(Icons.arrow_forward, size: 16.0),

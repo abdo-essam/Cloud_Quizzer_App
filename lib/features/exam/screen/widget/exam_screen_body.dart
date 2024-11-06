@@ -119,7 +119,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                     AnswerButton(
                         question:
                             widget.questions[context.read<ExamCubit>().index],
-                        optionIndex: i),
+                        optionIndex: i,numOFQuestions: certification.numOfQuestions,),
                 ],
               ),
             ),

@@ -27,7 +27,7 @@ class _CertificationItemState extends State<CertificationItem> {
         );
       },
       child: Container(
-        height: 150.h,
+        height: 135.h,
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
