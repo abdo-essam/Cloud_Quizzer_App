@@ -23,7 +23,7 @@ class AppRouting {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) =>
-                ExamCubit()..getQuestions(certification.certificationCode),
+                ExamCubit()..getQuestions(certification),
             child: const ExamScreen(),
           ),
           settings: RouteSettings(arguments: arguments),

@@ -9,6 +9,7 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Lottie.asset('assets/lottie/error.json', width: 200.w, height: 200.h),

@@ -1,3 +1,4 @@
+import 'package:cloudquizzer/core/models/certification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,11 +14,11 @@ class AnswerButton extends StatefulWidget {
       {super.key,
       required this.question,
       required this.optionIndex,
-      required this.numOFQuestions});
+      required this.certification});
 
   final int optionIndex;
   final Question question;
-  final int numOFQuestions;
+  final Certification certification;
 
   @override
   State<AnswerButton> createState() => _AnswerButtonState();
@@ -54,13 +55,14 @@ class _AnswerButtonState extends State<AnswerButton> {
           });
 
           // if it is the last question then navigate to the result screen
-          if (context.read<ExamCubit>().index == widget.numOFQuestions - 1) {
-            Navigator.of(context)
-                .popAndPushNamed(Routes.resultScreen, arguments: {
+          if (context.read<ExamCubit>().index ==
+              widget.certification.numOfQuestions - 1) {
+            Navigator.of(context).pushNamed(Routes.resultScreen, arguments: {
               'score': context.read<ExamCubit>().score,
               'endIndex': context.read<ExamCubit>().index,
               'incorrectQuestions':
-                  context.read<ExamCubit>().incorrectQuestionsList
+                  context.read<ExamCubit>().incorrectQuestionsList,
+              'certification': widget.certification
             });
           } else {
             // go to next question

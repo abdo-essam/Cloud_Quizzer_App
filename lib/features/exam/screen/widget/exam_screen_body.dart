@@ -21,11 +21,19 @@ class ExamScreenBody extends StatefulWidget {
 }
 
 class _ExamScreenBodyState extends State<ExamScreenBody> {
-
   //  Manages the CountDown state, letting it persist across question updates.
   final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
 
+  late final Certification certification;
 
+  @override
+  // add certification data using didChangeDependencies method to avoid rebuilds
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    certification = args['certification'];
+    //print(incorrectQuestions[0].questionText);
+  }
   void navToResult() {
     Navigator.of(context).popAndPushNamed(
       Routes.resultScreen,
@@ -33,6 +41,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
         'score': context.read<ExamCubit>().score,
         'endIndex': context.read<ExamCubit>().index,
         'incorrectQuestions': context.read<ExamCubit>().incorrectQuestionsList,
+        'certification': certification,
       },
     );
   }
@@ -43,8 +52,6 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final Certification certification = args['certification'];
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
@@ -119,7 +126,8 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                     AnswerButton(
                         question:
                             widget.questions[context.read<ExamCubit>().index],
-                        optionIndex: i,numOFQuestions: certification.numOfQuestions,),
+                        optionIndex: i,
+                        certification: certification),
                 ],
               ),
             ),
@@ -155,7 +163,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                     bool shouldNavigateBack = await showBackAlertDialog(
                         context, 'Do you want to Exit the Exam?');
                     if (shouldNavigateBack) {
-                      Navigator.of(context).pop();
+                      Navigator.popAndPushNamed(context, Routes.homeScreen);
                     }
                   },
                   child: const Icon(

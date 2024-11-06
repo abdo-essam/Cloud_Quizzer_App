@@ -1,4 +1,5 @@
 import 'package:cloudquizzer/core/widgets/error_screen.dart';
+import 'package:cloudquizzer/features/home/screen/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,8 +32,12 @@ class ExamScreenBlocBuilder extends StatelessWidget {
           return getQuestionScreen(state.questions);
         }
 
-        return const ErrorScreen();
+        if (state is ExamError) {
+          print(state.error);
+          return const ErrorScreen();
+        }
 
+        return const HomeScreen();
       },
       listener: (BuildContext context, ExamState state) {
         if (state is ExamError) {
