@@ -30,10 +30,12 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
   // add certification data using didChangeDependencies method to avoid rebuilds
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     certification = args['certification'];
     //print(incorrectQuestions[0].questionText);
   }
+
   void navToResult() {
     Navigator.of(context).popAndPushNamed(
       Routes.resultScreen,

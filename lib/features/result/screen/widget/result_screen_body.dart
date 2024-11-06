@@ -23,18 +23,26 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     score = args['score'];
     endIndex = args['endIndex'];
     incorrectQuestions = args['incorrectQuestions'];
     certification = args['certification'];
+    Color color = Colors.red;
     //print(incorrectQuestions[0].questionText);
   }
 
   @override
   Widget build(BuildContext context) {
+    Color color = Colors.red;
     double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
     // print('percentage: $percentage score: $score endIndex: $endIndex');
+    if (percentage >= 70) {
+      color = Colors.green;
+    } else {
+      color = Colors.red;
+    }
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -83,7 +91,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                     fontSize: 18.sp,
                   ),
                 ),
-                progressColor: Theme.of(context).primaryColor,
+                progressColor: color,
               ),
               SizedBox(
                 height: 20.h,
@@ -93,7 +101,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                   'Congratulations',
                   style: GoogleFonts.quicksand(
                     textStyle: TextStyle(
-                        color: Colors.green,
+                        color: color,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w500),
                   ),
@@ -155,7 +163,6 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                             'certification': certification,
                           },
                         );
-
                       },
                       child: Text(
                         'Try Again',
