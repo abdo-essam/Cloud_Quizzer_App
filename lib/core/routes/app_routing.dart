@@ -7,6 +7,7 @@ import '../../features/exam/screen/ui/exam_screen.dart';
 import '../../features/home/screen/ui/home_screen.dart';
 import '../../features/result/screen/ui/result_screen.dart';
 import '../../features/review/screen/ui/review_question_screen.dart';
+import '../models/certification.dart';
 
 class AppRouting {
   Route? generateRoutes(RouteSettings routeSettings) {
@@ -15,10 +16,14 @@ class AppRouting {
     switch (routeSettings.name) {
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+
       case Routes.examScreen:
+        final args = arguments as Map<String, dynamic>;
+        final Certification certification = args['certification'];
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => ExamCubit()..getQuestions(),
+            create: (context) =>
+                ExamCubit()..getQuestions(certification.certificationCode),
             child: const ExamScreen(),
           ),
           settings: RouteSettings(arguments: arguments),
@@ -37,13 +42,7 @@ class AppRouting {
         );
 
       default:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No route defined for ${routeSettings.name}'),
-            ),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
     }
   }
 }

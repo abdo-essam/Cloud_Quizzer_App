@@ -27,14 +27,13 @@ class _CertificationItemState extends State<CertificationItem> {
         );
       },
       child: Container(
-        height: 140.h,
-        width: 170.w,
-        margin: const EdgeInsets.symmetric(vertical: 10),
+        height: 150.h,
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(25),
           color: Colors.white,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
             Row(
@@ -42,7 +41,7 @@ class _CertificationItemState extends State<CertificationItem> {
                 Image(
                     width: 100.w,
                     height: 85.w,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.values[1],
                     image: AssetImage(widget.certification.imagePath)),
                 SizedBox(width: 20.w),
                 Expanded(
@@ -70,7 +69,6 @@ class _CertificationItemState extends State<CertificationItem> {
                 ))
               ],
             ),
-            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Row(

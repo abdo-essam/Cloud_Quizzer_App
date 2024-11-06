@@ -29,6 +29,17 @@ class AppDatabase {
     INSERT INTO Questions (question_text, answer_index, options, certification_code) VALUES ('AWS allows users to manage their resources using a web based user interface. What is the name of this interface?', 3, 'A. AWS CLI,B. AWS API,C. AWS SDK,D. AWS Management Console', 'AWS-CCP')
     """);
     }
+    for (var i = 0; i < 10; i++) {
+      await db.execute("""
+    INSERT INTO Questions (question_text, answer_index, options, certification_code) VALUES ('Google allows users to manage their resources using a web based user interface. What is the name of this interface?', 3, 'A. Google CLI,B. Google API,C. Google SDK,D. Google Management Console', 'GCP-ACE')
+    """);
+    }
+
+/*    for (var i = 0; i < 10; i++) {
+      await db.execute("""
+    INSERT INTO Questions (question_text, answer_index, options, certification_code) VALUES ('Microsoft Azure allows users to manage their resources using a web based user interface. What is the name of this interface?', 3, 'A. Microsoft Azure CLI,B. Microsoft Azure API,C. Microsoft Azure SDK,D. Microsoft Azure Management Console', 'AZ-900')
+    """);
+    }*/
   }
 
 /*  Future<void> _onCreate(Database db, int version) async {
@@ -184,9 +195,13 @@ INSERT INTO Questions (question_text, answer_index, options, certification_code)
     });
   }*/
 
-  Future<List<Question>> getQuestions() async {
+  Future<List<Question>> getQuestions(String certificationCode) async {
     final db = await database;
-    List<Map<String, dynamic>> maps = await db.query('Questions');
+    List<Map<String, dynamic>> maps = await db.query(
+      'Questions',
+      where: 'certification_code = ?',
+      whereArgs: [certificationCode],
+    );
 
     return List.generate(maps.length, (i) {
       return Question.fromMap(maps[i]);

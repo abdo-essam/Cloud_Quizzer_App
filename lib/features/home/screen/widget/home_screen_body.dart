@@ -15,45 +15,48 @@ class HomeScreenBody extends StatelessWidget {
       color: Colors.black,
       child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: HomeWelcomeTopBar(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Take Exam to Test Your Knowledge",
-                        style: GoogleFonts.quicksand(
-                            fontSize: 16.0.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        width: 15.w,
-                      ),
-                      const Icon(
-                        Icons.arrow_circle_right_outlined,
-                        color: Colors.white,
-                        size: 22,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                SingleChildScrollView(
-                  child: CertificationItemListView(),
-                ),
-              ],
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10.h,
             ),
-          )),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: HomeWelcomeTopBar(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Take Exam to Test Your Knowledge",
+                    style: GoogleFonts.quicksand(
+                        fontSize: 16.0.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  const Icon(
+                    Icons.arrow_circle_right_outlined,
+                    color: Colors.white,
+                    size: 22,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            SingleChildScrollView(
+              child: CertificationItemListView(),
+            ),
+          ],
+        ),
+      )),
     );
   }
 }

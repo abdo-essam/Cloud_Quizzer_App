@@ -6,7 +6,6 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../../core/models/questions.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../home/screen/ui/home_screen.dart';
-import '../../../review/screen/ui/review_question_screen.dart';
 
 class ResultScreenBody extends StatefulWidget {
   const ResultScreenBody({super.key});
@@ -157,12 +156,10 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).popAndPushNamed(
-                        Routes.reviewQuestionScreen,
-                        arguments: {
-                          'incorrectQuestions': incorrectQuestions,
-                        },
-                      );
+                      Navigator.pushNamed(context, Routes.reviewQuestionScreen,
+                          arguments: {
+                            'incorrectQuestions': incorrectQuestions
+                          });
                     },
                     child: Text(
                       'Check Answers',
