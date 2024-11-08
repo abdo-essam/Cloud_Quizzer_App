@@ -1,4 +1,5 @@
 import 'package:cloudquizzer/core/routes/routes.dart';
+import 'package:cloudquizzer/features/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +15,8 @@ class AppRouting {
     final arguments = routeSettings.arguments;
 
     switch (routeSettings.name) {
+      case Routes.splashScreen:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
 

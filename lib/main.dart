@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(useMaterial3: true, primaryColor: Colors.deepOrange),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: appRouting.generateRoutes,
-        initialRoute: Routes.homeScreen,
+        initialRoute: Routes.splashScreen,
       ),
     );
   }

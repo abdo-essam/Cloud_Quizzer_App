@@ -28,8 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.black,
         child: SafeArea(
           child: Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
             child: GNav(
               curve: Curves.easeOutExpo,
               rippleColor: Colors.white.withOpacity(0.3),
@@ -47,17 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
               tabs: [
                 GButton(
                   iconSize: _selectedIndex != 0 ? 28 : 25,
-                  icon: _selectedIndex == 0
-                      ? Icons.home
-                      : Icons.home_outlined,
-                  iconColor:_selectedIndex == 0 ? Colors.white : Colors.grey,
+                  icon: _selectedIndex == 0 ? Icons.home : Icons.home_outlined,
+                  iconColor: _selectedIndex == 0 ? Colors.white : Colors.grey,
                   text: 'Home',
                 ),
                 GButton(
                   icon: _selectedIndex == 1
                       ? Icons.history
                       : Icons.history_outlined,
-                  iconColor:_selectedIndex == 0 ? Colors.white : Colors.grey,
+                  iconColor: _selectedIndex == 0 ? Colors.white : Colors.grey,
                   text: 'History Score',
                 ),
                 GButton(
@@ -65,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: _selectedIndex == 2
                       ? Icons.bookmark
                       : Icons.bookmark_outline,
-                  iconColor:_selectedIndex == 0 ? Colors.white : Colors.grey,
+                  iconColor: _selectedIndex == 0 ? Colors.white : Colors.grey,
                   text: 'Bookmark',
                 ),
               ],
@@ -81,10 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final pages = [
     HomeScreenBody(),
     const Center(
-      child: Text("Fav"),
+      child: Text("History Score"),
     ),
     const Center(
-      child: Text("Cart"),
+      child: Text("Bookmark"),
     ),
   ];
 }
