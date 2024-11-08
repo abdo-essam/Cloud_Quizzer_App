@@ -15,19 +15,16 @@ class HomeScreenBody extends StatelessWidget {
       color: Colors.black,
       child: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+             Padding(
+              padding: EdgeInsets.all(16.0.h),
               child: HomeWelcomeTopBar(),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w , vertical: 8.0.h),
               child: Row(
                 children: [
                   Text(
@@ -40,16 +37,13 @@ class HomeScreenBody extends StatelessWidget {
                   SizedBox(
                     width: 15.w,
                   ),
-                  const Icon(
+                   Icon(
                     Icons.arrow_circle_right_outlined,
                     color: Colors.white,
-                    size: 22,
+                    size: 22.sp,
                   )
                 ],
               ),
-            ),
-            SizedBox(
-              height: 10.h,
             ),
             SingleChildScrollView(
               child: CertificationItemListView(),

@@ -28,12 +28,12 @@ class _CertificationItemState extends State<CertificationItem> {
       },
       child: Container(
         height: 135.h,
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: Colors.white,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: Column(
           children: [
             Row(

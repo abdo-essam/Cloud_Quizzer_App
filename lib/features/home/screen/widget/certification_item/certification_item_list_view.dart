@@ -15,13 +15,13 @@ class CertificationItemListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 500.h,
+      height: 440.h,
       width: double.infinity,
       child: ListView.builder(
           itemBuilder: (context, index) {
             return CertificationItem(certification: certificationsDataList[index]);
           },
-          itemCount: 3),
+          itemCount: certificationsDataList.length),
     );
   }
 }

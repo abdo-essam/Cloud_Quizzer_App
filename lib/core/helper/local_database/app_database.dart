@@ -10,7 +10,7 @@ class AppDatabase {
   AppDatabase._init();
 
   Future<Database> get database async {
-    _database ??= await openDatabase('appdatabase.db',
+    _database ??= await openDatabase('questionDatabase.db',
         version: 1, onCreate: _onCreate, onUpgrade: _onUpgrade);
     return _database!;
   }
