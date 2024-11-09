@@ -79,7 +79,7 @@ class ExamCubit extends Cubit<ExamState> {
 
       await bookmarkBox.add(newBookmark);
       isBookmarked = false;
-      emit(ExamAddedBookmarkQuestion('Question bookmarked successfully!'));
+      print('add bookmark');
     } else {
       print("Question already bookmarked.");
     }

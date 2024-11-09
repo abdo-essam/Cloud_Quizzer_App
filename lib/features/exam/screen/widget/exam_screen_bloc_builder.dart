@@ -45,7 +45,6 @@ class ExamScreenBlocBuilder extends StatelessWidget {
         }
         if (state is ExamAddedBookmarkQuestion) {
           print('Question bookmarked successfully!');
-          context.read<ExamCubit>().updateIndex();
         }
       },
     );
