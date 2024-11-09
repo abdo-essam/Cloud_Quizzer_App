@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import '../../../../core/functions/show_back_alert_dialog.dart';
-
 class HistoryScreenBody extends StatefulWidget {
   const HistoryScreenBody({super.key, required this.scores});
 
@@ -104,12 +102,7 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                                           color: Colors.red,
                                         ),
                                         onTap: () async {
-                                          bool delete = await showBackAlertDialog(
-                                              context,
-                                              'Do you want to Delete this score?');
-                                          if (delete) {
-                                            deleteScore(index);
-                                          }
+                                          deleteScore(index);
                                         }),
                                     const SizedBox(
                                       height: 10,

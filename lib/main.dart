@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/bloc_observer.dart';
+import 'core/models/bookmark.dart';
 import 'core/models/score.dart';
 import 'core/routes/app_routing.dart';
 import 'core/routes/routes.dart';
@@ -11,9 +12,11 @@ import 'core/routes/routes.dart';
 void main() async{
   Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
-  Hive.registerAdapter(ScoreAdapter()); // Register the adapter
+  Hive.registerAdapter(ScoreAdapter());
+  Hive.registerAdapter(BookmarkAdapter());
   await Hive.initFlutter();
   await Hive.openBox('scoresBox');
+  await Hive.openBox('bookmarks');
   runApp(MyApp(
     appRouting: AppRouting(),
   ));

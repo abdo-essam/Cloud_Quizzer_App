@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../core/helper/local_database/app_database.dart';
+import '../../../core/models/bookmark.dart';
 import '../../../core/models/certification.dart';
 import '../../../core/models/questions.dart';
 import 'exam_state.dart';
@@ -12,6 +14,7 @@ class ExamCubit extends Cubit<ExamState> {
 
   int index = 0;
   int score = 0;
+  bool isBookmarked = false;
   List<Question> questions = [];
   List<Question> incorrectQuestionsList = [];
   late Certification certification;
@@ -43,9 +46,9 @@ class ExamCubit extends Cubit<ExamState> {
     emit(ExamIncreaseScore());
   }
 
-  void addFailedQuestions(Question incorrectQuestion) {
+  void addIncorrectQuestions(Question incorrectQuestion) {
     incorrectQuestionsList.add(incorrectQuestion);
-    emit(ExamAddedFailedQuestion(incorrectQuestionsList));
+    emit(ExamAddedIncorrectQuestion(incorrectQuestionsList));
   }
 
   void resetExam() {
@@ -53,5 +56,32 @@ class ExamCubit extends Cubit<ExamState> {
     index = 0;
     // Add any other resets needed for the quiz state
     emit(ExamInitial()); // Emit an initial state if you are using states
+  }
+
+  void addBookmark(Question question) async {
+    var bookmarkBox = Hive.box('bookmarks');
+
+    // Check if the question is already bookmarked
+    final existingBookmark = bookmarkBox.values.firstWhere(
+      (bookmark) => bookmark.questionText == question.questionText,
+      orElse: () => Bookmark(
+        questionText: '',
+        answer: '',
+      ),
+    );
+
+    if (existingBookmark.questionText.isEmpty) {
+      // If not bookmarked, add a new bookmark
+      final newBookmark = Bookmark(
+        questionText: question.questionText,
+        answer: question.options[question.answerIndex],
+      );
+
+      await bookmarkBox.add(newBookmark);
+      isBookmarked = false;
+      emit(ExamAddedBookmarkQuestion('Question bookmarked successfully!'));
+    } else {
+      print("Question already bookmarked.");
+    }
   }
 }

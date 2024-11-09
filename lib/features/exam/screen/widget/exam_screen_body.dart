@@ -21,6 +21,8 @@ class ExamScreenBody extends StatefulWidget {
 }
 
 class _ExamScreenBodyState extends State<ExamScreenBody> {
+  //bool isBookmarked = false;
+
   //  Manages the CountDown state, letting it persist across question updates.
   final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
 
@@ -33,6 +35,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     certification = args['certification'];
+
     //print(incorrectQuestions[0].questionText);
   }
 
@@ -129,7 +132,8 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                         question:
                             widget.questions[context.read<ExamCubit>().index],
                         optionIndex: i,
-                        certification: certification!),
+                        certification: certification!,
+                        bookmarked: context.read<ExamCubit>().isBookmarked),
                 ],
               ),
             ),
@@ -168,9 +172,9 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                       Navigator.popAndPushNamed(context, Routes.homeScreen);
                     }
                   },
-                  child: const Icon(
+                  child: Icon(
                     Icons.arrow_back_ios_new_sharp,
-                    size: 15,
+                    size: 15.sp,
                     color: Colors.white,
                   ),
                 ),
@@ -204,7 +208,33 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                           fontWeight: FontWeight.w500),
                     ),
                   ),
-                ))
+                )),
+                SizedBox(
+                  width: 10.w,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 19),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  onPressed: () async {
+                    setState(() {
+                      context.read<ExamCubit>().isBookmarked = !context.read<ExamCubit>().isBookmarked;
+                    });
+                  },
+                  child: Icon(
+                    context.read<ExamCubit>().isBookmarked
+                        ? Icons.bookmark
+                        : Icons.bookmark_border_outlined,
+                    size: 15.sp,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
           ],

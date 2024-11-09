@@ -28,7 +28,7 @@ class ExamScreenBlocBuilder extends StatelessWidget {
           return getQuestionScreen(state.questions);
         }
 
-        if (state is ExamQuestionIndexUpdated) {
+        if (state is ExamQuestionIndexUpdated ) {
           return getQuestionScreen(state.questions);
         }
 
@@ -42,6 +42,10 @@ class ExamScreenBlocBuilder extends StatelessWidget {
       listener: (BuildContext context, ExamState state) {
         if (state is ExamError) {
           showBackAlertDialog(context, state.error);
+        }
+        if (state is ExamAddedBookmarkQuestion) {
+          print('Question bookmarked successfully!');
+          context.read<ExamCubit>().updateIndex();
         }
       },
     );

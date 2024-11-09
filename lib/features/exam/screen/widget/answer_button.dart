@@ -14,11 +14,12 @@ class AnswerButton extends StatefulWidget {
       {super.key,
       required this.question,
       required this.optionIndex,
-      required this.certification});
+      required this.certification, required this.bookmarked});
 
   final int optionIndex;
   final Question question;
   final Certification certification;
+  final bool bookmarked;
 
   @override
   State<AnswerButton> createState() => _AnswerButtonState();
@@ -41,6 +42,13 @@ class _AnswerButtonState extends State<AnswerButton> {
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: ElevatedButton(
         onPressed: () {
+          // add Bookmark to the list
+          if (widget.bookmarked) {
+
+            context.read<ExamCubit>().addBookmark(widget.question);
+            print('Question bookmarked');
+          }
+
           // Update button color based on answer correctness
           setState(() {
             if (widget.question.answerIndex == widget.optionIndex) {
@@ -48,7 +56,7 @@ class _AnswerButtonState extends State<AnswerButton> {
               context.read<ExamCubit>().increaseScore();
             } else {
               // add Failed Question to the list
-              context.read<ExamCubit>().addFailedQuestions(widget.question);
+              context.read<ExamCubit>().addIncorrectQuestions(widget.question);
               print(context.read<ExamCubit>().incorrectQuestionsList.length);
               backgroundButtonColor = Colors.red; // Incorrect answer
             }

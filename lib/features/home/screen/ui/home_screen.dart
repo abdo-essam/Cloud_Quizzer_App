@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../../../bookmark/screen/ui/bookmark_screen.dart';
 import '../../../result/screen/ui/result_screen.dart';
 import '../widget/home_screen_body.dart';
 
@@ -80,8 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final pages = [
     HomeScreenBody(),
     HistoryScreen(),
-    const Center(
-      child: Text("Bookmark"),
-    ),
+    BookmarkScreen(),
   ];
 }

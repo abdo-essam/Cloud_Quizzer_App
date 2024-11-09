@@ -18,24 +18,29 @@ class ExamQuestionIndexUpdated extends ExamState {
   ExamQuestionIndexUpdated({required this.questions});
 }
 
-class ExamQuestionLastIndexUpdated extends ExamState {}
-
 class ExamIncreaseScore extends ExamState {}
 
 class ExamGetAllQuestions extends ExamState {
   List<Question> questions;
+
   ExamGetAllQuestions({required this.questions});
 }
 
 class ExamGetCertificationQuestions extends ExamState {
   List<Question> questions;
+
   ExamGetCertificationQuestions({required this.questions});
 }
 
 class ExamChangeOptionButtonColor extends ExamState {}
 
-class ExamAddedFailedQuestion extends ExamState {
-  final List<Question> failedQuestions;
+class ExamAddedIncorrectQuestion extends ExamState {
+  final List<Question> incorrectQuestions;
 
-  ExamAddedFailedQuestion(this.failedQuestions);
+  ExamAddedIncorrectQuestion(this.incorrectQuestions);
+}
+
+class ExamAddedBookmarkQuestion extends ExamState {
+  final String message;
+  ExamAddedBookmarkQuestion(this.message);
 }
