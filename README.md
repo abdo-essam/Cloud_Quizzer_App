@@ -1,16 +1,22 @@
-# cloudquizzer
+# Cloud Quizzer
 
-A new Flutter project.
+**Cloud Quizzer** is a mobile quiz application designed for users preparing for various cloud certifications, such as AWS Cloud Practitioner, Google Cloud Associate, and Microsoft Azure Fundamentals. Built with Flutter, this app provides a smooth, user-friendly experience for reviewing and practicing multiple-choice questions, tracking progress, and improving knowledge of cloud concepts.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Features
+- **Multi-Cloud Provider Support**: Includes quizzes for AWS, Google Cloud, and Microsoft Azure certifications.
+- **Question Review & Feedback**: Review incorrect answers with explanations.
+- **Progress Tracking**: Track scores and improvement across multiple attempts.
+- **Certification-Specific Questions**: Organized by certification code for focused learning.
+- **Offline Access**: Leverages SQLite for offline quiz access.
+  
+---
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
+| Home Screen | Quiz Screen | Review Screen |
+|---|---|---|
+| <img src="screenshots/home_screen.png" width="250"> | <img src="screenshots/quiz_screen.png" width="250"> | <img src="screenshots/review_screen.png" width="250"> |
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
