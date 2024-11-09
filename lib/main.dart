@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/bloc_observer.dart';
+import 'core/models/score.dart';
 import 'core/routes/app_routing.dart';
 import 'core/routes/routes.dart';
 
-void main() {
+void main() async{
   Bloc.observer = MyBlocObserver();
+  WidgetsFlutterBinding.ensureInitialized();
+  Hive.registerAdapter(ScoreAdapter()); // Register the adapter
+  await Hive.initFlutter();
+  await Hive.openBox('scoresBox');
   runApp(MyApp(
     appRouting: AppRouting(),
   ));

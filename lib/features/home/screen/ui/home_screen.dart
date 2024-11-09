@@ -1,7 +1,9 @@
+import 'package:cloudquizzer/features/history/screen/ui/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../../../result/screen/ui/result_screen.dart';
 import '../widget/home_screen_body.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -77,9 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final pages = [
     HomeScreenBody(),
-    const Center(
-      child: Text("History Score"),
-    ),
+    HistoryScreen(),
     const Center(
       child: Text("Bookmark"),
     ),

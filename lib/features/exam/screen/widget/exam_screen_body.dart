@@ -24,7 +24,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
   //  Manages the CountDown state, letting it persist across question updates.
   final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
 
-  late final Certification certification;
+  Certification? certification;
 
   @override
   // add certification data using didChangeDependencies method to avoid rebuilds
@@ -67,7 +67,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                 children: [
                   CountDown(
                     key: _countdownKey,
-                    quizTime: certification.examTime,
+                    quizTime: certification!.examTime,
                     timeOut: () {
                       // if time out then the reminder questions will be incorrect
                       // then make the index equal to the last question to calculating the score for overall
@@ -81,7 +81,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                   ),
                   // Text to display the question number
                   Text(
-                    'Q.${context.read<ExamCubit>().index + 1}/${certification.numOfQuestions}',
+                    'Q.${context.read<ExamCubit>().index + 1}/${certification!.numOfQuestions}',
                     style: GoogleFonts.quicksand(
                       textStyle: TextStyle(
                         fontSize: 14.sp,
@@ -129,7 +129,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                         question:
                             widget.questions[context.read<ExamCubit>().index],
                         optionIndex: i,
-                        certification: certification),
+                        certification: certification!),
                 ],
               ),
             ),

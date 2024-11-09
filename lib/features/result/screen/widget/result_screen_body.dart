@@ -1,11 +1,13 @@
 import 'package:cloudquizzer/core/models/certification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../../core/models/questions.dart';
 import '../../../../core/routes/routes.dart';
+import '../../manager/result_cubit.dart';
 
 class ResultScreenBody extends StatefulWidget {
   const ResultScreenBody({super.key});
@@ -15,22 +17,32 @@ class ResultScreenBody extends StatefulWidget {
 }
 
 class _ResultScreenBodyState extends State<ResultScreenBody> {
-  late final int score;
-  late final int endIndex;
-  late final List<Question> incorrectQuestions;
-  late final Certification certification;
+  int score = 0; // Initialize with default values
+  int endIndex = 0;
+  List<Question> incorrectQuestions = [];
+  Certification? certification; // Make certification nullable
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    score = args['score'];
-    endIndex = args['endIndex'];
-    incorrectQuestions = args['incorrectQuestions'];
-    certification = args['certification'];
-    Color color = Colors.red;
-    //print(incorrectQuestions[0].questionText);
+    final args = ModalRoute.of(context)!.settings.arguments;
+    // Handle null and type check for arguments
+    if (args is Map<String, dynamic>) {
+      score = args['score'] ?? 0; // Use ?? to provide default value
+      endIndex = args['endIndex'] ?? 0;
+      incorrectQuestions =
+          List<Question>.from(args['incorrectQuestions'] ?? []);
+      certification = args['certification'] as Certification?;
+    } else {
+      // Handle invalidarguments, e.g., show an error message
+      print('Invalid arguments passed to ResultScreenBody');
+    }
+
+    // Save score if certification is not null
+    if (certification != null) {
+      context.read<ResultCubit>().saveScore(score,
+          certification!.certificationName, certification!.numOfQuestions);
+    }
   }
 
   @override
