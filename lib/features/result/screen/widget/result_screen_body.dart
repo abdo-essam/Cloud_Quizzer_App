@@ -21,6 +21,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
   int endIndex = 0;
   List<Question> incorrectQuestions = [];
   Certification? certification; // Make certification nullable
+  bool scoreSaved = false;
 
   @override
   void didChangeDependencies() {
@@ -38,10 +39,10 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
       print('Invalid arguments passed to ResultScreenBody');
     }
 
-    // Save score if certification is not null
-    if (certification != null) {
-      context.read<ResultCubit>().saveScore(score,
-          certification!.certificationName, certification!.numOfQuestions);
+    // Save score only once
+    if (!scoreSaved && certification != null) {
+      context.read<ResultCubit>().saveScore(score, certification!.certificationName, endIndex + 1);
+      scoreSaved = true; // Set the flag to true after saving
     }
   }
 
@@ -60,6 +61,10 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
       padding: const EdgeInsets.all(16.0),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () =>
+                  Navigator.popAndPushNamed(context, Routes.homeScreen),
+              icon: Icon(Icons.arrow_back)),
           iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true,
           backgroundColor: Colors.black,

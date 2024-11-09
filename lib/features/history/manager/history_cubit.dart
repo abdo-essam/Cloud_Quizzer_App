@@ -12,7 +12,7 @@ class HistoryCubit extends Cubit<HistoryState> {
     try {
       emit(HistoryLoading());
       final box = Hive.box('scoresBox');
-      emit(HistoryLoaded(scores: box.values.cast<Score>().toList()));
+      emit(HistoryLoaded(scores: box.values.cast<Score>().toList().reversed.toList()));
       return box.values.cast<Score>().toList();
     } catch (e) {
       emit(HistoryError(message: e.toString()));

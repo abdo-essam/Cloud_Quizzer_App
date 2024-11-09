@@ -110,16 +110,18 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                                     CircularPercentIndicator(
                                       radius: 60.0,
                                       lineWidth: 13.0,
-                                      percent:
-                                          (widget.scores[index].score * 1.0) /
-                                              100,
+                                      // double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
+                                      percent: (widget.scores[index].score) /
+                                          widget.scores[index].numOfQuestions,
                                       animationDuration: 1200,
                                       circularStrokeCap:
                                           CircularStrokeCap.round,
                                       center: Text(
-                                          "${widget.scores[index].score}%"),
-                                      progressColor: conditionalColor(
-                                          widget.scores[index].score),
+                                          "${(widget.scores[index].score / widget.scores[index].numOfQuestions * 100).toInt()}%"),
+                                      progressColor: conditionalColor(widget
+                                              .scores[index].score /
+                                          widget.scores[index].numOfQuestions *
+                                          100),
                                     ),
                                   ],
                                 ),
@@ -144,7 +146,7 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
     });
   }
 
-  Color conditionalColor(int value) {
+  Color conditionalColor(double value) {
     if (value >= 70) {
       return Colors.green;
     }
