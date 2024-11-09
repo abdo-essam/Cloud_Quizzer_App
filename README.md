@@ -14,9 +14,9 @@
 ---
 
 ## Screenshots
-![Home Screen](screenshots/home_screen.png)
-![Quiz Screen](screenshots/quiz_screen.png)
-![Review Screen](screenshots/review_screen.png)
+| Home Screen | Quiz Screen | Review Screen |
+|---|---|---|
+| <img src="screenshots/home_screen.png" width="250"> | <img src="screenshots/quiz_screen.png" width="250"> | <img src="screenshots/review_screen.png" width="250"> |
 
 ---
 
