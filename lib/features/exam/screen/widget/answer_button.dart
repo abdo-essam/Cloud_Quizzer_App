@@ -2,6 +2,7 @@ import 'package:cloudquizzer/core/models/certification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/functions/get_color.dart';
@@ -14,7 +15,8 @@ class AnswerButton extends StatefulWidget {
       {super.key,
       required this.question,
       required this.optionIndex,
-      required this.certification, required this.bookmarked});
+      required this.certification,
+      required this.bookmarked});
 
   final int optionIndex;
   final Question question;
@@ -44,9 +46,16 @@ class _AnswerButtonState extends State<AnswerButton> {
         onPressed: () {
           // add Bookmark to the list
           if (widget.bookmarked) {
-
             context.read<ExamCubit>().addBookmark(widget.question);
-            print('Question bookmarked');
+            Fluttertoast.showToast(
+                msg: "Bookmark Added",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            context.read<ExamCubit>().isBookmarked = false;
           }
 
           // Update button color based on answer correctness
