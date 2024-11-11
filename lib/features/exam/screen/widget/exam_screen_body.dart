@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/functions/show_back_alert_dialog.dart';
 import '../../../../core/models/questions.dart';
 import '../../../../core/routes/routes.dart';
+import '../../../../core/theme/color_manager.dart';
 import '../../manager/exam_cubit.dart';
 import 'answer_button.dart';
 import 'count_down.dart';
@@ -58,7 +59,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: ColorManager.black,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -89,7 +90,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                       textStyle: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: ColorManager.white,
                       ),
                     ),
                   ),
@@ -113,7 +114,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                     style: GoogleFonts.quicksand(
                       textStyle: TextStyle(
                         fontSize: 14.sp,
-                        color: Colors.white,
+                        color: ColorManager.white,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -147,7 +148,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
           children: [
             const Divider(
               thickness: 1,
-              color: Colors.white,
+              color: ColorManager.white,
             ),
             SizedBox(
               height: 5.h,
@@ -175,7 +176,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                   child: Icon(
                     Icons.arrow_back_ios_new_sharp,
                     size: 15.sp,
-                    color: Colors.white,
+                    color: ColorManager.white,
                   ),
                 ),
                 SizedBox(
@@ -204,7 +205,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                     style: GoogleFonts.quicksand(
                       textStyle: TextStyle(
                           fontSize: 13.sp,
-                          color: Colors.white,
+                          color: ColorManager.white,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -232,7 +233,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
                         ? Icons.bookmark
                         : Icons.bookmark_border_outlined,
                     size: 15.sp,
-                    color: Colors.white,
+                    color: ColorManager.white,
                   ),
                 ),
               ],

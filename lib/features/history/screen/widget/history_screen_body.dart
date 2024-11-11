@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../../core/theme/color_manager.dart';
+
 class HistoryScreenBody extends StatefulWidget {
   const HistoryScreenBody({super.key, required this.scores});
 
@@ -26,7 +28,7 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
             Text(
               "History Point",
               style: TextStyle(
-                  color: Colors.white,
+                  color: ColorManager.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 30),
             ),
@@ -47,7 +49,7 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
+                              color: ColorManager.cultured),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +62,7 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                                     Text(
                                       widget.scores[index].certificationName,
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: ColorManager.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
                                       ),
@@ -94,7 +96,7 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                                     InkWell(
                                         child: Icon(
                                           Icons.close,
-                                          color: Colors.red,
+                                          color: ColorManager.red,
                                         ),
                                         onTap: () async {
                                           deleteScore(index);
@@ -143,8 +145,8 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
 
   Color conditionalColor(double value) {
     if (value >= 70) {
-      return Colors.green;
+      return ColorManager.green;
     }
-    return Colors.red;
+    return ColorManager.red;
   }
 }

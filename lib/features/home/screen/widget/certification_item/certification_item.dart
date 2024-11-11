@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../core/routes/routes.dart';
+import '../../../../../core/theme/color_manager.dart';
 
 class CertificationItem extends StatefulWidget {
   const CertificationItem({super.key, required this.certification});
@@ -31,7 +32,7 @@ class _CertificationItemState extends State<CertificationItem> {
         margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: Colors.white,
+          color: ColorManager.cultured,
         ),
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: Column(
@@ -53,7 +54,7 @@ class _CertificationItemState extends State<CertificationItem> {
                       style: GoogleFonts.quicksand(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        color: ColorManager.black,
                       ),
                     ),
                     SizedBox(height: 10.h),
@@ -62,7 +63,7 @@ class _CertificationItemState extends State<CertificationItem> {
                       style: GoogleFonts.quicksand(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black,
+                        color: ColorManager.black,
                       ),
                     ),
                   ],
@@ -77,24 +78,24 @@ class _CertificationItemState extends State<CertificationItem> {
                   Row(
                     children: [
                       const Icon(Icons.info_outline,
-                          color: Colors.deepOrange, size: 20.0),
+                          color: ColorManager.primaryColor, size: 20.0),
                       SizedBox(width: 10.w),
                       Text(
                         "${widget.certification.numOfQuestions} Questions",
                         style: GoogleFonts.quicksand(
-                            fontSize: 13.sp, color: Colors.black),
+                            fontSize: 13.sp, color: ColorManager.black),
                       ),
                     ],
                   ),
                   Row(
                     children: [
                       const Icon(Icons.timer_outlined,
-                          color: Colors.deepOrange, size: 20.0),
+                          color: ColorManager.primaryColor, size: 20.0),
                       SizedBox(width: 10.w),
                       Text(
                         "${widget.certification.examTime} Mins",
                         style: GoogleFonts.quicksand(
-                            fontSize: 13, color: Colors.black),
+                            fontSize: 13, color: ColorManager.black),
                       ),
                     ],
                   ),

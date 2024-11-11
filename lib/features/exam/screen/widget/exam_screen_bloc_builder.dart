@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/functions/show_back_alert_dialog.dart';
 import '../../../../core/models/questions.dart';
+import '../../../../core/theme/color_manager.dart';
 import '../../../../core/widgets/no_data_founded_screen.dart';
 import '../../manager/exam_cubit.dart';
 import '../../manager/exam_state.dart';
@@ -20,7 +21,7 @@ class ExamScreenBlocBuilder extends StatelessWidget {
         if (state is ExamLoading) {
           return const Center(
             child: CircularProgressIndicator(
-              color: Colors.deepOrange,
+              color: ColorManager.primaryColor,
             ),
           );
         }

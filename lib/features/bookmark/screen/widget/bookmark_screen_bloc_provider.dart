@@ -4,6 +4,7 @@ import 'package:cloudquizzer/features/bookmark/screen/widget/bookmark_screen_bod
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/theme/color_manager.dart';
 import '../../../../core/widgets/no_data_founded_screen.dart';
 import '../../manager/bookmark_state.dart';
 
@@ -18,7 +19,7 @@ class BookmarkScreenBlocProvider extends StatelessWidget {
         if (state is BookmarkLoading) {
           return const Center(
             child: CircularProgressIndicator(
-              color: Colors.deepOrange,
+              color: ColorManager.primaryColor,
             ),
           );
         }

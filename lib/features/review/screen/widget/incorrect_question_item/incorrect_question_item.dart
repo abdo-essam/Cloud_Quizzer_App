@@ -2,6 +2,8 @@ import 'package:cloudquizzer/core/models/questions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/theme/color_manager.dart';
+
 class IncorrectQuestionItem extends StatefulWidget {
   const IncorrectQuestionItem({super.key, required this.incorrectQuestion});
 
@@ -20,7 +22,7 @@ class _IncorrectQuestionItemState extends State<IncorrectQuestionItem> {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: ColorManager.cultured,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -32,7 +34,7 @@ class _IncorrectQuestionItemState extends State<IncorrectQuestionItem> {
                   const Expanded(
                     child: Icon(
                       Icons.close,
-                      color: Colors.red,
+                      color: ColorManager.red,
                     ),
                   ),
                   SizedBox(
@@ -42,7 +44,7 @@ class _IncorrectQuestionItemState extends State<IncorrectQuestionItem> {
                     flex: 20,
                     child: Text(
                       widget.incorrectQuestion.questionText,
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                      style: const TextStyle(fontSize: 18, color: ColorManager.black),
                     ),
                   ),
                 ],
@@ -56,7 +58,7 @@ class _IncorrectQuestionItemState extends State<IncorrectQuestionItem> {
                   children: <Widget>[
                     const Text("Correct Answer : ",
                         style: TextStyle(
-                            color: Colors.green, fontWeight: FontWeight.bold)),
+                            color: ColorManager.green, fontWeight: FontWeight.bold)),
                     Expanded(
                       child: Text(
                           widget.incorrectQuestion

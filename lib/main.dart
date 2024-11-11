@@ -1,3 +1,4 @@
+import 'package:cloudquizzer/core/theme/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       child: MaterialApp(
-        theme: ThemeData(useMaterial3: true, primaryColor: Colors.deepOrange),
+        theme: ThemeData(useMaterial3: true, primaryColor: ColorManager.primaryColor),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: appRouting.generateRoutes,
         initialRoute: Routes.splashScreen,

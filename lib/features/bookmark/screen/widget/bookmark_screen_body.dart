@@ -1,6 +1,8 @@
 import 'package:cloudquizzer/core/models/bookmark.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/color_manager.dart';
+
 class BookmarkScreenBody extends StatefulWidget {
   const BookmarkScreenBody({super.key, required this.bookmarks});
 
@@ -15,7 +17,7 @@ class _BookmarkScreenBodyState extends State<BookmarkScreenBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        color: ColorManager.black,
         child: Column(
           children: [
             const SizedBox(
@@ -24,7 +26,7 @@ class _BookmarkScreenBodyState extends State<BookmarkScreenBody> {
             Text(
               "Saved Questions",
               style: TextStyle(
-                  color: Colors.white,
+                  color: ColorManager.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 30),
             ),
@@ -45,7 +47,7 @@ class _BookmarkScreenBodyState extends State<BookmarkScreenBody> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
+                              color: ColorManager.cultured),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +72,7 @@ class _BookmarkScreenBodyState extends State<BookmarkScreenBody> {
                                           'Answer :',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.green),
+                                              color: ColorManager.green),
                                         ),
                                         const SizedBox(
                                           width: 10,
@@ -94,7 +96,7 @@ class _BookmarkScreenBodyState extends State<BookmarkScreenBody> {
                                     InkWell(
                                         child: Icon(
                                           Icons.close,
-                                          color: Colors.red,
+                                          color: ColorManager.red,
                                         ),
                                         onTap: () async {
                                           deleteScore(index);

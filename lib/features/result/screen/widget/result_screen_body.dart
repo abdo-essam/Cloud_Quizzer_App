@@ -7,6 +7,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../../core/models/questions.dart';
 import '../../../../core/routes/routes.dart';
+import '../../../../core/theme/color_manager.dart';
 import '../../manager/result_cubit.dart';
 
 class ResultScreenBody extends StatefulWidget {
@@ -52,9 +53,9 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
     double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
     // print('percentage: $percentage score: $score endIndex: $endIndex');
     if (percentage >= 70) {
-      color = Colors.green;
+      color = ColorManager.green;
     } else {
-      color = Colors.red;
+      color = ColorManager.red;
     }
 
     return Padding(
@@ -65,15 +66,15 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
               onPressed: () =>
                   Navigator.popAndPushNamed(context, Routes.homeScreen),
               icon: Icon(Icons.arrow_back)),
-          iconTheme: const IconThemeData(color: Colors.white),
+          iconTheme: const IconThemeData(color: ColorManager.white),
           centerTitle: true,
-          backgroundColor: Colors.black,
+          backgroundColor: ColorManager.black,
           title: const Text(
             "Result",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: ColorManager.white, fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: ColorManager.black,
         body: SizedBox(
           width: double.infinity,
           child: Column(
@@ -91,7 +92,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                       : '$score out of 0 are correct',
                   style: GoogleFonts.quicksand(
                     textStyle: TextStyle(
-                        color: Colors.white,
+                        color: ColorManager.white,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600),
                   ),
@@ -104,7 +105,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                 center: Text(
                   "${percentage.toInt()}%",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: ColorManager.white,
                     fontSize: 18.sp,
                   ),
                 ),
@@ -128,7 +129,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                   'Better luck next time',
                   style: GoogleFonts.quicksand(
                     textStyle: TextStyle(
-                        color: Colors.red,
+                        color: ColorManager.red,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w500),
                   ),
@@ -140,7 +141,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                 'You have got $score Points',
                 style: GoogleFonts.quicksand(
                   textStyle: TextStyle(
-                    color: Colors.white,
+                    color: ColorManager.white,
                     fontSize: 13.sp,
                   ),
                 ),
@@ -186,7 +187,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                         style: GoogleFonts.quicksand(
                           textStyle: TextStyle(
                               fontSize: 13.sp,
-                              color: Colors.white,
+                              color: ColorManager.white,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -199,7 +200,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         elevation: 0.0,
-                        backgroundColor: Colors.white,
+                        backgroundColor: ColorManager.white,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 17),
                         shape: RoundedRectangleBorder(
@@ -218,7 +219,7 @@ class _ResultScreenBodyState extends State<ResultScreenBody> {
                           textStyle: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w500,
-                              color: Colors.black),
+                              color: ColorManager.black),
                         ),
                       ),
                     ),

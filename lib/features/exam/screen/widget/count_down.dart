@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 
+import '../../../../core/theme/color_manager.dart';
+
 class CountDown extends StatefulWidget {
   final int quizTime;
   final Function timeOut;
@@ -34,7 +36,7 @@ class CountDownState extends State<CountDown> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
         border: Border.all(
-          color: Colors.white,
+          color: ColorManager.white,
           width: 1.5,
         ),
       ),
@@ -44,15 +46,15 @@ class CountDownState extends State<CountDown> {
             padding: const EdgeInsets.only(right: 5),
             child: Icon(
               Icons.timer_outlined,
-              color: Colors.white,
+              color: ColorManager.white,
               size: 18.w,
             ),
           ),
           TimerCountdown(
             format: CountDownTimerFormat.hoursMinutesSeconds,
             enableDescriptions: false,
-            colonsTextStyle: const TextStyle(color: Colors.white),
-            timeTextStyle: const TextStyle(color: Colors.white),
+            colonsTextStyle: const TextStyle(color: ColorManager.white),
+            timeTextStyle: const TextStyle(color: ColorManager.white),
             endTime: _endTime,
             onEnd: () {
               widget.timeOut();

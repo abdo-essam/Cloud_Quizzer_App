@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/routes/routes.dart';
+import '../../core/theme/color_manager.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -24,7 +25,7 @@ class SplashScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(14.0),
                 child: const ImageIcon(
                   AssetImage('assets/images/cloud.png'),
-                  color: Colors.deepOrange,
+                  color: ColorManager.primaryColor,
                   size: 70,
                 ),
               ),
@@ -32,7 +33,7 @@ class SplashScreen extends StatelessWidget {
                 'Cloud',
                 style: GoogleFonts.quicksand(
                     fontSize: 32.0.sp,
-                    color: Colors.white,
+                    color: ColorManager.white,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2.0),
               ),
@@ -40,7 +41,7 @@ class SplashScreen extends StatelessWidget {
                 'Quizzer',
                 style: GoogleFonts.quicksand(
                   fontSize: 32.0.sp,
-                  color: Colors.deepOrange,
+                  color: ColorManager.primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

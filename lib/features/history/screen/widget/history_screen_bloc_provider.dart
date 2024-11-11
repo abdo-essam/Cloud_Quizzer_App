@@ -3,6 +3,7 @@ import 'package:cloudquizzer/features/history/manager/history_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/theme/color_manager.dart';
 import '../../../../core/widgets/no_data_founded_screen.dart';
 import '../../manager/history_state.dart';
 import 'history_screen_body.dart';
@@ -18,7 +19,7 @@ class HistoryScreenBlocProvider extends StatelessWidget {
         if (state is HistoryLoading) {
           return const Center(
             child: CircularProgressIndicator(
-              color: Colors.deepOrange,
+              color: ColorManager.primaryColor,
             ),
           );
         }

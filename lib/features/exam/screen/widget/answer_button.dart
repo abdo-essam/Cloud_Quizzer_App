@@ -1,4 +1,5 @@
 import 'package:cloudquizzer/core/models/certification.dart';
+import 'package:cloudquizzer/core/theme/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,9 +34,9 @@ class _AnswerButtonState extends State<AnswerButton> {
     // this function check if the answer for the first question is correct or not
     ifCorrect() {
       if (widget.question.answerIndex == widget.optionIndex) {
-        return Colors.green;
+        return ColorManager.green;
       } else {
-        return Colors.red;
+        return ColorManager.red;
       }
     }
 
@@ -52,8 +53,8 @@ class _AnswerButtonState extends State<AnswerButton> {
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
+                backgroundColor: ColorManager.black,
+                textColor: ColorManager.white,
                 fontSize: 16.0);
             context.read<ExamCubit>().isBookmarked = false;
           }
@@ -61,13 +62,13 @@ class _AnswerButtonState extends State<AnswerButton> {
           // Update button color based on answer correctness
           setState(() {
             if (widget.question.answerIndex == widget.optionIndex) {
-              backgroundButtonColor = Colors.green; // Correct answer
+              backgroundButtonColor = ColorManager.green; // Correct answer
               context.read<ExamCubit>().increaseScore();
             } else {
               // add Failed Question to the list
               context.read<ExamCubit>().addIncorrectQuestions(widget.question);
               print(context.read<ExamCubit>().incorrectQuestionsList.length);
-              backgroundButtonColor = Colors.red; // Incorrect answer
+              backgroundButtonColor = ColorManager.red; // Incorrect answer
             }
           });
 
@@ -90,11 +91,11 @@ class _AnswerButtonState extends State<AnswerButton> {
             elevation: const WidgetStatePropertyAll(0),
             padding: const WidgetStatePropertyAll(
                 EdgeInsets.symmetric(vertical: 25, horizontal: 15)),
-            backgroundColor: getColor(Colors.white, backgroundButtonColor),
-            foregroundColor: getColor(Colors.black, Colors.white),
+            backgroundColor: getColor(ColorManager.cultured, backgroundButtonColor),
+            foregroundColor: getColor(ColorManager.black, ColorManager.cultured),
             shape: WidgetStateProperty.all(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
-              side: const BorderSide(color: Colors.grey, width: 0.5),
+              side: const BorderSide(color: ColorManager.grayX, width: 0.5),
             ))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

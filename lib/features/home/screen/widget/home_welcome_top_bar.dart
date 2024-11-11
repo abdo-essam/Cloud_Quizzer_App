@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/theme/color_manager.dart';
+
 class HomeWelcomeTopBar extends StatelessWidget {
   const HomeWelcomeTopBar({super.key});
 
@@ -11,7 +13,7 @@ class HomeWelcomeTopBar extends StatelessWidget {
       children: [
         const Icon(
           Icons.waving_hand_outlined,
-          color: Colors.white,
+          color: ColorManager.white,
           size: 20,
         ),
         SizedBox(
@@ -23,7 +25,7 @@ class HomeWelcomeTopBar extends StatelessWidget {
               'Hello,',
               style: GoogleFonts.quicksand(
                 fontSize: 18.0.sp,
-                color: Colors.white,
+                color: ColorManager.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -31,14 +33,14 @@ class HomeWelcomeTopBar extends StatelessWidget {
               ' Welcome to ',
               style: GoogleFonts.quicksand(
                 fontSize: 18.0.sp,
-                color: Colors.white,
+                color: ColorManager.white,
               ),
             ),
             Text(
               'Cloud',
               style: GoogleFonts.quicksand(
                 fontSize: 18.0.sp,
-                color: Colors.white,
+                color: ColorManager.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -46,7 +48,7 @@ class HomeWelcomeTopBar extends StatelessWidget {
               'Quizzer',
               style: GoogleFonts.quicksand(
                 fontSize: 18.0.sp,
-                color: Colors.deepOrange,
+                color: ColorManager.primaryColor,
                 fontWeight: FontWeight.bold,
               ),
             ),

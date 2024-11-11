@@ -1,4 +1,5 @@
 import 'package:cloudquizzer/core/models/questions.dart';
+import 'package:cloudquizzer/core/theme/color_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'incorrect_question_item/incorrect_question_item_list_view.dart';
@@ -28,15 +29,15 @@ class _ReviewQuestionScreenBodyState extends State<ReviewQuestionScreenBody> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: ColorManager.black,
           appBar: AppBar(
-            iconTheme: const IconThemeData(color: Colors.white),
+            iconTheme: const IconThemeData(color: ColorManager.white),
             centerTitle: true,
-            backgroundColor: Colors.black,
+            backgroundColor: ColorManager.black,
             title: const Text(
               "Incorrect Questions",
               style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  TextStyle(color: ColorManager.white, fontWeight: FontWeight.bold),
             ),
           ),
           body: IncorrectQuestionItemListView(

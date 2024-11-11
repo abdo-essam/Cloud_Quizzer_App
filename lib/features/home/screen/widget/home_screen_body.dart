@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/theme/color_manager.dart';
 import 'certification_item/certification_item_list_view.dart';
 import 'home_welcome_top_bar.dart';
 
@@ -12,7 +13,7 @@ class HomeScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // container is outside the safe area to show the status bar
     return Container(
-      color: Colors.black,
+      color: ColorManager.black,
       child: SafeArea(
           child: Padding(
         padding: EdgeInsets.all(8.0.w),
@@ -31,7 +32,7 @@ class HomeScreenBody extends StatelessWidget {
                     "Take Exam to Test Your Knowledge",
                     style: GoogleFonts.quicksand(
                         fontSize: 16.0.sp,
-                        color: Colors.white,
+                        color: ColorManager.white,
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
@@ -39,7 +40,7 @@ class HomeScreenBody extends StatelessWidget {
                   ),
                    Icon(
                     Icons.arrow_circle_right_outlined,
-                    color: Colors.white,
+                    color: ColorManager.white,
                     size: 22.sp,
                   )
                 ],
