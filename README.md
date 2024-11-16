@@ -17,6 +17,10 @@
 | Home Screen | Quiz Screen | Review Screen |
 |---|---|---|
 | <img src="screenshots/home_screen.png" width="250"> | <img src="screenshots/quiz_screen.png" width="250"> | <img src="screenshots/review_screen.png" width="250"> |
+| Home Screen | Quiz Screen | Review Screen |
+|---|---|---|
+| <img src="screenshots/home_screen.png" width="250"> | <img src="screenshots/quiz_screen.png" width="250"> | <img src="screenshots/review_screen.png" width="250"> |
+
 
 ---
 
