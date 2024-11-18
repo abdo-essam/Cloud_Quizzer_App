@@ -1,4 +1,5 @@
 import 'package:cloudquizzer/core/theme/color_manager.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,7 @@ import 'core/routes/routes.dart';
 void main() async{
   Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Hive.registerAdapter(ScoreAdapter());
   Hive.registerAdapter(BookmarkAdapter());
   await Hive.initFlutter();
