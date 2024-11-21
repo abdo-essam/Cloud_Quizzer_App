@@ -11,47 +11,64 @@ class HomeScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // container is outside the safe area to show the status bar
     return Container(
       color: ColorManager.black,
       child: SafeArea(
-          child: Padding(
-        padding: EdgeInsets.all(8.0.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-             Padding(
-              padding: EdgeInsets.all(16.0.h),
-              child: HomeWelcomeTopBar(),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0.w , vertical: 8.0.h),
-              child: Row(
-                children: [
-                  Text(
-                    "Take Exam to Test Your Knowledge",
-                    style: GoogleFonts.quicksand(
-                        fontSize: 16.0.sp,
-                        color: ColorManager.white,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                   Icon(
-                    Icons.arrow_circle_right_outlined,
-                    color: ColorManager.white,
-                    size: 22.sp,
-                  )
-                ],
+        child: Padding(
+          padding: EdgeInsets.all(8.0.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: HomeWelcomeTopBar(),
               ),
-            ),
-            SingleChildScrollView(
-              child: CertificationItemListView(),
-            ),
-          ],
+              const _ExamHeader(),
+              // Using Expanded to ensure proper scrolling
+              Expanded(
+                child: SingleChildScrollView(
+                  child: CertificationItemListView(),
+                ),
+              ),
+            ],
+          ),
         ),
-      )),
+      ),
+    );
+  }
+}
+
+class _ExamHeader extends StatelessWidget {
+  const _ExamHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.0.h),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              "Take Exam to Test Your Knowledge",
+              style: _examTextStyle(),
+            ),
+          ),
+          SizedBox(width: 15.w),
+          Icon(
+            Icons.arrow_circle_right_outlined,
+            color: ColorManager.white,
+            size: 22.sp,
+          ),
+        ],
+      ),
+    );
+  }
+
+  TextStyle _examTextStyle() {
+    return GoogleFonts.quicksand(
+      fontSize: 16.0.sp,
+      color: ColorManager.white,
+      fontWeight: FontWeight.w600,
     );
   }
 }
