@@ -15,7 +15,7 @@ class CertificationItemListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 440.h,
+      height: 540.h,
       width: double.infinity,
       child: ListView.builder(
           itemBuilder: (context, index) {

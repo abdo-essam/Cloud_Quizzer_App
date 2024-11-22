@@ -14,7 +14,7 @@ class Constants {
       certificationName: 'AWS Certified Solutions Architect - Associate',
       numOfQuestions: 65,
       examTime: 130,
-      imagePath: 'assets/images/aws_solutions_architect_associate_badge.png',
+      imagePath: 'assets/images/aws_cloud_practitioner_badge.png',
       cloudProvider: 'AWS',
       certificationCode: 'AWS-SAA'
     ),*/
@@ -30,7 +30,7 @@ class Constants {
       certificationName: 'Microsoft Certified: Azure Administrator Associate',
       numOfQuestions: 60,
       examTime: 120,
-      imagePath: 'assets/images/azure_administrator_badge.png',
+      imagePath: 'assets/images/aws_cloud_practitioner_badge.png',
       cloudProvider: 'Microsoft Azure',
       certificationCode: 'AZ-104'
     ),*/
@@ -46,7 +46,7 @@ class Constants {
       certificationName: 'Google Professional Cloud Architect',
       numOfQuestions: 50,
       examTime: 120,
-      imagePath: 'assets/images/google_professional_cloud_architect_badge.png',
+      imagePath: 'assets/images/aws_cloud_practitioner_badge.png',
       cloudProvider: 'Google Cloud',
       certificationCode: 'GCP-PCA'
     ),*/
