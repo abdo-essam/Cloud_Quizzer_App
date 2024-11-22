@@ -9,50 +9,42 @@ class HomeWelcomeTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Define reusable text style
+    final baseTextStyle = GoogleFonts.quicksand(
+      fontSize: 18.sp,
+      color: ColorManager.white,
+    );
+
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Icon(
           Icons.waving_hand_outlined,
           color: ColorManager.white,
           size: 20,
         ),
-        SizedBox(
-          width: 10.w,
-        ),
-        Row(
-          children: [
-            Text(
-              'Hello,',
-              style: GoogleFonts.quicksand(
-                fontSize: 18.0.sp,
-                color: ColorManager.white,
-                fontWeight: FontWeight.bold,
+        SizedBox(width: 10.w),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Hello, ',
+                style: baseTextStyle,
               ),
-            ),
-            Text(
-              ' Welcome to ',
-              style: GoogleFonts.quicksand(
-                fontSize: 18.0.sp,
-                color: ColorManager.white,
+              TextSpan(
+                text: 'Welcome to ',
+                style: baseTextStyle,
               ),
-            ),
-            Text(
-              'Cloud',
-              style: GoogleFonts.quicksand(
-                fontSize: 18.0.sp,
-                color: ColorManager.white,
-                fontWeight: FontWeight.bold,
+              TextSpan(
+                text: 'Cloud',
+                style: baseTextStyle.copyWith(fontWeight: FontWeight.bold),
               ),
-            ),
-            Text(
-              'Quizzer',
-              style: GoogleFonts.quicksand(
-                fontSize: 18.0.sp,
-                color: ColorManager.primaryColor,
-                fontWeight: FontWeight.bold,
+              TextSpan(
+                text: 'Quizzer',
+                style: baseTextStyle.copyWith(color: ColorManager.primaryColor, fontWeight: FontWeight.bold),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
