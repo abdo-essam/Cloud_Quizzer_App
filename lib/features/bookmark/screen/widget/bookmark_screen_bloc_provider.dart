@@ -26,6 +26,8 @@ class BookmarkScreenBlocProvider extends StatelessWidget {
         if (state is BookmarkLoaded) {
           return getBookmarkScreen(state.bookmarks);
         }
+
+
         if (state is BookmarkError) {
           return Center(
             child: Text(state.message),

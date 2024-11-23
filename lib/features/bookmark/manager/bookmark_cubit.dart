@@ -18,4 +18,26 @@ class BookmarkCubit extends Cubit<BookmarkState> {
       return [];
     }
   }
+
+  Future<void> deleteBookmark(Bookmark bookmark) async {
+    try {
+      final box = Hive.box('bookmarks');
+
+      // Locate the key associated with the bookmark
+      final key = box.keys.firstWhere(
+            (k) => box.get(k) == bookmark,
+        orElse: () => null, // Handle if no key is found
+      );
+
+      if (key != null) {
+        await box.delete(key); // Delete using the key
+        emit(BookmarkDelete(bookmark: bookmark));
+        getBookmarks(); // Refresh bookmarks
+      } else {
+        emit(BookmarkError(message: "Bookmark not found."));
+      }
+    } catch (e) {
+      emit(BookmarkError(message: e.toString()));
+    }
+  }
 }

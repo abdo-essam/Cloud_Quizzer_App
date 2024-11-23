@@ -18,3 +18,8 @@ class BookmarkError extends BookmarkState {
 
 class BookmarkLoading extends BookmarkState {}
 
+
+class BookmarkDelete extends BookmarkState {
+  final Bookmark bookmark;
+  BookmarkDelete({required this.bookmark});
+}

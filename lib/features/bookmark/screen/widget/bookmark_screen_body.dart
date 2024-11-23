@@ -1,7 +1,9 @@
 import 'package:cloudquizzer/core/models/bookmark.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/color_manager.dart';
+import '../../manager/bookmark_cubit.dart';
 
 class BookmarkScreenBody extends StatefulWidget {
   const BookmarkScreenBody({super.key, required this.bookmarks});
@@ -99,7 +101,7 @@ class _BookmarkScreenBodyState extends State<BookmarkScreenBody> {
                                           color: ColorManager.red,
                                         ),
                                         onTap: () async {
-                                          deleteScore(index);
+                                          context.read<BookmarkCubit>().deleteBookmark(widget.bookmarks[index]);
                                         }),
                                     const SizedBox(
                                       height: 10,
@@ -118,12 +120,5 @@ class _BookmarkScreenBodyState extends State<BookmarkScreenBody> {
     );
   }
 
-  void deleteScore(int index) async {
-    final bookmarkToDelete = widget.bookmarks[index];
-    await bookmarkToDelete.delete();
 
-    setState(() {
-      widget.bookmarks.removeAt(index);
-    });
-  }
 }
