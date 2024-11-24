@@ -23,16 +23,23 @@ class HistoryCubit extends Cubit<HistoryState> {
   Future<void> deleteScore(Score score) async {
     try {
       final box = Hive.box('scoresBox');
-      await box.delete(score);
-      emit(HistoryDeleteScore(score: score));
+
+      // Locate the key associated with the score
+      final key = box.keys.firstWhere(
+            (k) => box.get(k) == score,
+        orElse: () => null, // Handle if no key is found
+      );
+
+      if (key != null) {
+        await box.delete(key); // Delete using the key
+        emit(HistoryDeleteScore(score: score));
+        getScores(); // Refresh scores
+      } else {
+        emit(HistoryError(message: "score not found."));
+      }
     } catch (e) {
       emit(HistoryError(message: e.toString()));
     }
   }
-
-
-
-
-
 
 }

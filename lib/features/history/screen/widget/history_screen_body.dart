@@ -1,5 +1,7 @@
 import 'package:cloudquizzer/core/models/score.dart';
+import 'package:cloudquizzer/features/history/manager/history_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -100,7 +102,7 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
                                           color: ColorManager.red,
                                         ),
                                         onTap: () async {
-                                          deleteScore(index);
+                                          context.read<HistoryCubit>().deleteScore(widget.scores[index]);
                                         }),
                                     const SizedBox(
                                       height: 10,
@@ -133,15 +135,6 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
         ),
       ),
     );
-  }
-
-  void deleteScore(int index) async {
-    final scoreToDelete = widget.scores[index];
-    await scoreToDelete.delete();
-
-    setState(() {
-      widget.scores.removeAt(index);
-    });
   }
 
   Color conditionalColor(double value) {
