@@ -39,6 +39,8 @@ class ExamScreenBlocBuilder extends StatelessWidget {
     }
 
     // Default fallback screen to handle unexpected states gracefully
+
+    print("return to Home Screen");
     return const HomeScreen();
   }
 

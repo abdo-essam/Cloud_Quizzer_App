@@ -22,224 +22,221 @@ class ExamScreenBody extends StatefulWidget {
 }
 
 class _ExamScreenBodyState extends State<ExamScreenBody> {
-  //bool isBookmarked = false;
-
-  //  Manages the CountDown state, letting it persist across question updates.
   final GlobalKey<CountDownState> _countdownKey = GlobalKey<CountDownState>();
-
   Certification? certification;
 
   @override
-  // add certification data using didChangeDependencies method to avoid rebuilds
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    certification = args['certification'];
-
-    //print(incorrectQuestions[0].questionText);
+    if (certification == null) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      certification = args?['certification'];
+    }
   }
 
-  void navToResult() {
-    Navigator.of(context).popAndPushNamed(
+  /// Navigate to result screen with required arguments
+  void _navigateToResult() {
+    final examCubit = context.read<ExamCubit>();
+    Navigator.of(context).pushNamed(
       Routes.resultScreen,
       arguments: {
-        'score': context.read<ExamCubit>().score,
-        'endIndex': context.read<ExamCubit>().index,
-        'incorrectQuestions': context.read<ExamCubit>().incorrectQuestionsList,
+        'score': examCubit.score,
+        'endIndex': examCubit.index,
+        'incorrectQuestions': examCubit.incorrectQuestionsList,
         'certification': certification,
       },
     );
   }
 
-  void restartCountdown() {
-    _countdownKey.currentState?.restart();
+  /// Handles timer timeout scenario
+  void _onTimeOut() {
+    final examCubit = context.read<ExamCubit>();
+    examCubit.handleTimeOut();
+    _navigateToResult();
   }
 
   @override
   Widget build(BuildContext context) {
+    final examCubit = context.read<ExamCubit>();
+    final currentQuestion = widget.questions[examCubit.index];
+
     return Scaffold(
       backgroundColor: ColorManager.black,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CountDown(
-                    key: _countdownKey,
-                    quizTime: certification!.examTime,
-                    timeOut: () {
-                      // if time out then the reminder questions will be incorrect
-                      // then make the index equal to the last question to calculating the score for overall
-
-                      if (context.read<ExamCubit>().index != 0) {
-                        context.read<ExamCubit>().index =
-                            widget.questions.length - 1;
-                      }
-                      navToResult();
-                    },
-                  ),
-                  // Text to display the question number
-                  Text(
-                    'Q.${context.read<ExamCubit>().index + 1}/${certification!.numOfQuestions}',
-                    style: GoogleFonts.quicksand(
-                      textStyle: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: ColorManager.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
-
-                  Text(
-                    widget.questions[context.read<ExamCubit>().index]
-                        .questionText,
-                    style: GoogleFonts.quicksand(
-                      textStyle: TextStyle(
-                        fontSize: 14.sp,
-                        color: ColorManager.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-
-                  // for loop to display the options
-                  for (int i = 0;
-                      i <
-                          widget.questions[context.read<ExamCubit>().index]
-                              .options.length;
-                      i++)
-                    AnswerButton(
-                        question:
-                            widget.questions[context.read<ExamCubit>().index],
-                        optionIndex: i,
-                        certification: certification!,
-                        bookmarked: context.read<ExamCubit>().isBookmarked),
-                ],
-              ),
-            ),
+            _buildHeader(examCubit),
+            const SizedBox(height: 20),
+            _buildQuestionContent(currentQuestion),
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-        child: Column(
-          children: [
-            const Divider(
-              thickness: 1,
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  /// Builds the header section with timer and question number
+  Widget _buildHeader(ExamCubit examCubit) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CountDown(
+            key: _countdownKey,
+            quizTime: certification?.examTime ?? 0,
+            timeOut: _onTimeOut,
+          ),
+          Text(
+            'Q.${examCubit.index + 1}/${certification?.numOfQuestions ?? 0}',
+            style: GoogleFonts.quicksand(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
               color: ColorManager.white,
             ),
-            SizedBox(
-              height: 5.h,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Builds the main question content with options
+  Widget _buildQuestionContent(Question question) {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              question.questionText,
+              style: GoogleFonts.quicksand(
+                fontSize: 14.sp,
+                color: ColorManager.white,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 19),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  onPressed: () async {
-                    bool shouldNavigateBack = await showBackAlertDialog(
-                        context, 'Do you want to Exit the Exam?');
-                    if (shouldNavigateBack) {
-                      Navigator.popAndPushNamed(context, Routes.homeScreen);
-                    }
-                  },
-                  child: Icon(
-                    Icons.arrow_back_ios_new_sharp,
-                    size: 15.sp,
-                    color: ColorManager.white,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                    child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 17),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  onPressed: () async {
-                    bool shouldNavigateBack = await showBackAlertDialog(
-                        context, 'Do you want to submit the exam ?');
-                    if (shouldNavigateBack) {
-                      navToResult();
-                    }
-                  },
-                  child: Text(
-                    'Complete',
-                    style: GoogleFonts.quicksand(
-                      textStyle: TextStyle(
-                          fontSize: 13.sp,
-                          color: ColorManager.white,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                )),
-                SizedBox(
-                  width: 10.w,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 19),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  onPressed: () async {
-                    setState(() {
-                      context.read<ExamCubit>().isBookmarked = !context.read<ExamCubit>().isBookmarked;
-                    });
-                  },
-                  child: Icon(
-                    context.read<ExamCubit>().isBookmarked
-                        ? Icons.bookmark
-                        : Icons.bookmark_border_outlined,
-                    size: 15.sp,
-                    color: ColorManager.white,
-                  ),
-                ),
-              ],
-            ),
+            const SizedBox(height: 20),
+            ..._buildAnswerOptions(question),
           ],
         ),
+      ),
+    );
+  }
+
+  /// Builds the answer options
+  List<Widget> _buildAnswerOptions(Question question) {
+    return List.generate(
+      question.options.length,
+      (i) => AnswerButton(
+        question: question,
+        optionIndex: i,
+        certification: certification!,
+        bookmarked: context.read<ExamCubit>().isBookmarked,
+      ),
+    );
+  }
+
+  /// Builds the bottom navigation bar with buttons
+  Widget _buildBottomNavigationBar() {
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      child: Column(
+        children: [
+          const Divider(thickness: 1, color: ColorManager.white),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildBackButton(),
+              const SizedBox(width: 10),
+              _buildSubmitButton(),
+              const SizedBox(width: 10),
+              _buildBookmarkButton(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Builds the "Back" button
+  Widget _buildBackButton() {
+    return ElevatedButton(
+      style: _buttonStyle(),
+      onPressed: () async {
+        final shouldNavigateBack = await showBackAlertDialog(
+          context,
+          'Do you want to exit the exam?',
+        );
+        if (shouldNavigateBack) {
+          Navigator.popAndPushNamed(context, Routes.homeScreen);
+        }
+      },
+      child: Icon(
+        Icons.arrow_back_ios_new_sharp,
+        size: 15.sp,
+        color: ColorManager.white,
+      ),
+    );
+  }
+
+  /// Builds the "Submit" button
+  Widget _buildSubmitButton() {
+    return Expanded(
+      child: ElevatedButton(
+        style: _buttonStyle(),
+        onPressed: () async {
+          final shouldNavigateBack = await showBackAlertDialog(
+            context,
+            'Do you want to submit the exam?',
+          );
+          if (shouldNavigateBack) {
+            _navigateToResult();
+          }
+        },
+        child: Text(
+          'Complete',
+          style: GoogleFonts.quicksand(
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w500,
+            color: ColorManager.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the "Bookmark" button
+  Widget _buildBookmarkButton() {
+    final examCubit = context.read<ExamCubit>();
+    return ElevatedButton(
+      style: _buttonStyle(),
+      onPressed: () {
+        setState(() {
+          examCubit.isBookmarked = !examCubit.isBookmarked;
+        });
+      },
+      child: Icon(
+        examCubit.isBookmarked
+            ? Icons.bookmark
+            : Icons.bookmark_border_outlined,
+        size: 15.sp,
+        color: ColorManager.white,
+      ),
+    );
+  }
+
+  /// Returns a common button style for navigation bar buttons
+  ButtonStyle _buttonStyle() {
+    return ElevatedButton.styleFrom(
+      elevation: 0.0,
+      backgroundColor: Theme.of(context).primaryColor,
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 17),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
       ),
     );
   }
