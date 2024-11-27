@@ -4,19 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-
 import '../../../../core/theme/color_manager.dart';
 
-class HistoryScreenBody extends StatefulWidget {
+class HistoryScreenBody extends StatelessWidget {
   const HistoryScreenBody({super.key, required this.scores});
 
   final List<Score> scores;
 
-  @override
-  State<HistoryScreenBody> createState() => _HistoryScreenBodyState();
-}
-
-class _HistoryScreenBodyState extends State<HistoryScreenBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,123 +18,107 @@ class _HistoryScreenBodyState extends State<HistoryScreenBody> {
         color: Colors.black,
         child: Column(
           children: [
-            const SizedBox(
-              height: 50,
-            ),
-            Text(
-              "History Point",
-              style: TextStyle(
-                  color: ColorManager.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30),
-            ),
+            const SizedBox(height: 50),
+            _buildHeader(),
             Expanded(
-                child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: widget.scores.length,
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: ListView.separated(
+                  itemCount: scores.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 15),
                   itemBuilder: (context, index) {
-                    return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 20),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: ColorManager.cultured),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.scores[index].certificationName,
-                                      style: TextStyle(
-                                        color: ColorManager.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "Question: ${widget.scores[index].score}/${widget.scores[index].numOfQuestions}",
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "Date: ${DateFormat('yyyy-MM-dd h:mm:ss a').format(widget.scores[index].date)}",
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "Your Score: ${widget.scores[index].score}",
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    InkWell(
-                                        child: Icon(
-                                          Icons.close,
-                                          color: ColorManager.red,
-                                        ),
-                                        onTap: () async {
-                                          context.read<HistoryCubit>().deleteScore(widget.scores[index]);
-                                        }),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    CircularPercentIndicator(
-                                      radius: 60.0,
-                                      lineWidth: 13.0,
-                                      // double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
-                                      percent: (widget.scores[index].score) /
-                                          widget.scores[index].numOfQuestions,
-                                      animationDuration: 1200,
-                                      circularStrokeCap:
-                                          CircularStrokeCap.round,
-                                      center: Text(
-                                          "${(widget.scores[index].score / widget.scores[index].numOfQuestions * 100).toInt()}%"),
-                                      progressColor: conditionalColor(widget
-                                              .scores[index].score /
-                                          widget.scores[index].numOfQuestions *
-                                          100),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ));
-                  }),
-            ))
+                    final score = scores[index];
+                    return _buildScoreCard(context, score);
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Color conditionalColor(double value) {
-    if (value >= 70) {
-      return ColorManager.green;
-    }
-    return ColorManager.red;
+  Widget _buildHeader() {
+    return Text(
+      "History Points",
+      style: TextStyle(
+        color: ColorManager.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 30,
+      ),
+    );
+  }
+
+  Widget _buildScoreCard(BuildContext context, Score score) {
+    final percentage = score.score / score.numOfQuestions;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: ColorManager.cultured,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: _buildScoreDetails(score),
+          ),
+          Expanded(
+            child: _buildScoreActions(context, score, percentage),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScoreDetails(Score score) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          score.certificationName,
+          style: TextStyle(
+            color: ColorManager.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text("Questions: ${score.score}/${score.numOfQuestions}"),
+        const SizedBox(height: 8),
+        Text("Date: ${DateFormat('yyyy-MM-dd h:mm:ss a').format(score.date)}"),
+        const SizedBox(height: 8),
+        Text("Your Score: ${score.score}"),
+      ],
+    );
+  }
+
+  Widget _buildScoreActions(BuildContext context, Score score, double percentage) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        InkWell(
+          onTap: () => context.read<HistoryCubit>().deleteScore(score),
+          child: const Icon(Icons.close, color: ColorManager.red),
+        ),
+        const SizedBox(height: 10),
+        CircularPercentIndicator(
+          radius: 60.0,
+          lineWidth: 13.0,
+          percent: percentage,
+          animationDuration: 1200,
+          circularStrokeCap: CircularStrokeCap.round,
+          center: Text("${(percentage * 100).toInt()}%"),
+          progressColor: _getConditionalColor(percentage * 100),
+        ),
+      ],
+    );
+  }
+
+  Color _getConditionalColor(double value) {
+    return value >= 70 ? ColorManager.green : ColorManager.red;
   }
 }
