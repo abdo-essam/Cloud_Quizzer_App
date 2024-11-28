@@ -24,6 +24,7 @@ class ExamScreenBlocBuilder extends StatelessWidget {
 
   /// Builds the appropriate screen based on the current state.
   Widget _buildStateScreen(BuildContext context, ExamState state) {
+    final questions = context.read<ExamCubit>().questions;
     if (state is ExamLoading) {
       return const Center(
         child: CircularProgressIndicator(
@@ -37,11 +38,13 @@ class ExamScreenBlocBuilder extends StatelessWidget {
     } else if (state is ExamError) {
       return const ErrorScreen();
     }
+    else if (state is ExamAddedBookmarkQuestion) {
+      debugPrint('Question bookmarked successfully!');
+    } else {
+      throw Exception('Unexpected state: $state');
+    }
 
-    // Default fallback screen to handle unexpected states gracefully
-
-    print("return to Home Screen");
-    return const HomeScreen();
+    return _buildQuestionScreen(questions);
   }
 
   /// Handles side effects when the state changes.
