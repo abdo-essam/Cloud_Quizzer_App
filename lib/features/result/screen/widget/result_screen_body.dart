@@ -18,217 +18,189 @@ class ResultScreenBody extends StatefulWidget {
 }
 
 class _ResultScreenBodyState extends State<ResultScreenBody> {
-  int score = 0; // Initialize with default values
+  int score = 0;
   int endIndex = 0;
   List<Question> incorrectQuestions = [];
-  Certification? certification; // Make certification nullable
+  Certification? certification;
   bool scoreSaved = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args = ModalRoute.of(context)!.settings.arguments;
-    // Handle null and type check for arguments
-    if (args is Map<String, dynamic>) {
-      score = args['score'] ?? 0; // Use ?? to provide default value
+
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      score = args['score'] ?? 0;
       endIndex = args['endIndex'] ?? 0;
-      incorrectQuestions =
-          List<Question>.from(args['incorrectQuestions'] ?? []);
+      incorrectQuestions = List<Question>.from(args['incorrectQuestions'] ?? []);
       certification = args['certification'] as Certification?;
-    } else {
-      // Handle invalidarguments, e.g., show an error message
-      print('Invalid arguments passed to ResultScreenBody');
     }
 
-    // Save score only once
     if (!scoreSaved && certification != null) {
-      context.read<ResultCubit>().saveScore(score, certification!.certificationName, endIndex + 1);
-      scoreSaved = true; // Set the flag to true after saving
+      context.read<ResultCubit>().saveScore(
+          score, certification!.certificationName, endIndex + 1);
+      scoreSaved = true;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Color color = Colors.red;
-    double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
-    // print('percentage: $percentage score: $score endIndex: $endIndex');
-    if (percentage >= 70) {
-      color = ColorManager.green;
-    } else {
-      color = ColorManager.red;
-    }
+    final double percentage = endIndex == 0 ? 0 : (score / (endIndex + 1)) * 100;
+    final Color progressColor = percentage >= 70 ? ColorManager.green : ColorManager.red;
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              onPressed: () =>
-                  Navigator.popAndPushNamed(context, Routes.homeScreen),
-              icon: Icon(Icons.arrow_back)),
-          iconTheme: const IconThemeData(color: ColorManager.white),
-          centerTitle: true,
-          backgroundColor: ColorManager.black,
-          title: const Text(
-            "Result",
-            style: TextStyle(color: ColorManager.white, fontWeight: FontWeight.bold),
-          ),
-        ),
-        backgroundColor: ColorManager.black,
-        body: SizedBox(
-          width: double.infinity,
+    return Scaffold(
+      appBar: _buildAppBar(),
+      backgroundColor: ColorManager.black,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 40.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(24),
-                child: Text(
-                  endIndex != 0
-                      ? '$score out of ${endIndex + 1} are correct'
-                      : '$score out of 0 are correct',
-                  style: GoogleFonts.quicksand(
-                    textStyle: TextStyle(
-                        color: ColorManager.white,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ),
+              SizedBox(height: 40.h),
+              _buildResultText(percentage),
+              SizedBox(height: 20.h),
               CircularPercentIndicator(
                 radius: 85.0,
                 lineWidth: 10.0,
                 percent: percentage / 100,
                 center: Text(
                   "${percentage.toInt()}%",
-                  style: TextStyle(
-                    color: ColorManager.white,
-                    fontSize: 18.sp,
-                  ),
+                  style: _resultTextStyle(ColorManager.white, 18.sp),
                 ),
-                progressColor: color,
+                progressColor: progressColor,
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              if (percentage >= 70)
-                Text(
-                  'Congratulations',
-                  style: GoogleFonts.quicksand(
-                    textStyle: TextStyle(
-                        color: color,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              if (percentage < 70)
-                Text(
-                  'Better luck next time',
-                  style: GoogleFonts.quicksand(
-                    textStyle: TextStyle(
-                        color: ColorManager.red,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              SizedBox(
-                height: 20.h,
-              ),
+              SizedBox(height: 20.h),
+              _buildCongratulatoryMessage(percentage),
+              SizedBox(height: 20.h),
               Text(
                 'You have got $score Points',
-                style: GoogleFonts.quicksand(
-                  textStyle: TextStyle(
-                    color: ColorManager.white,
-                    fontSize: 13.sp,
-                  ),
-                ),
+                style: _resultTextStyle(ColorManager.white, 13.sp),
               ),
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          height: 100,
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          child: Column(
+      ),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => Navigator.popAndPushNamed(context, Routes.homeScreen),
+      ),
+      backgroundColor: ColorManager.black,
+      iconTheme: const IconThemeData(color: ColorManager.white),
+      centerTitle: true,
+      title: const Text(
+        "Result",
+        style: TextStyle(
+          color: ColorManager.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResultText(double percentage) {
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Text(
+        endIndex != 0
+            ? '$score out of ${endIndex + 1} are correct'
+            : '$score out of 0 are correct',
+        style: _resultTextStyle(ColorManager.white, 18.sp),
+      ),
+    );
+  }
+
+  Widget _buildCongratulatoryMessage(double percentage) {
+    final String message = percentage >= 70
+        ? 'Congratulations'
+        : 'Better luck next time';
+
+    final Color color = percentage >= 70 ? ColorManager.green : ColorManager.red;
+
+    return Text(
+      message,
+      style: _resultTextStyle(color, 20.sp),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      child: Column(
+        children: [
+          const Divider(thickness: 1),
+          SizedBox(height: 5.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Divider(
-                thickness: 1,
+              _buildButton(
+                label: 'Try Again',
+                backgroundColor: Theme.of(context).primaryColor,
+                textColor: ColorManager.white,
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, Routes.examScreen, arguments: {
+                    'certification': certification,
+                  });
+                },
               ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0.0,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 17),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).popAndPushNamed(
-                          Routes.examScreen,
-                          arguments: {
-                            'certification': certification,
-                          },
-                        );
-                      },
-                      child: Text(
-                        'Try Again',
-                        style: GoogleFonts.quicksand(
-                          textStyle: TextStyle(
-                              fontSize: 13.sp,
-                              color: ColorManager.white,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0.0,
-                        backgroundColor: ColorManager.white,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 17),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, Routes.reviewQuestionScreen, arguments: {
-                          'incorrectQuestions': incorrectQuestions
-                        });
-                      },
-                      child: Text(
-                        'Check Answers',
-                        style: GoogleFonts.quicksand(
-                          textStyle: TextStyle(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
-                              color: ColorManager.black),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+              SizedBox(width: 10.w),
+              _buildButton(
+                label: 'Check Answers',
+                backgroundColor: ColorManager.white,
+                textColor: ColorManager.black,
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.reviewQuestionScreen,
+                    arguments: {'incorrectQuestions': incorrectQuestions},
+                  );
+                },
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButton({
+    required String label,
+    required Color backgroundColor,
+    required Color textColor,
+    required VoidCallback onPressed,
+  }) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 17),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
+        onPressed: onPressed,
+        child: Text(
+          label,
+          style: _resultTextStyle(textColor, 13.sp),
+        ),
+      ),
+    );
+  }
+
+  TextStyle _resultTextStyle(Color color, double fontSize) {
+    return GoogleFonts.quicksand(
+      textStyle: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontWeight: FontWeight.w500,
       ),
     );
   }
