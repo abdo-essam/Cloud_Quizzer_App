@@ -5,10 +5,14 @@ import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import '../../../../core/theme/color_manager.dart';
 
 class CountDown extends StatefulWidget {
-  final int quizTime;
-  final Function timeOut;
+  final int quizTime; // Quiz time in minutes
+  final VoidCallback timeOut; // Callback when the timer ends
 
-  const CountDown({super.key, required this.quizTime, required this.timeOut});
+  const CountDown({
+    super.key,
+    required this.quizTime,
+    required this.timeOut,
+  });
 
   @override
   CountDownState createState() => CountDownState();
@@ -20,28 +24,27 @@ class CountDownState extends State<CountDown> {
   @override
   void initState() {
     super.initState();
+    _setEndTime();
+  }
+
+  /// Initializes or resets the end time for the countdown timer
+  void _setEndTime() {
     _endTime = DateTime.now().add(Duration(minutes: widget.quizTime));
   }
 
-  void restart() {
-    setState(() {
-      _endTime = DateTime.now().add(Duration(minutes: widget.quizTime));
-    });
+  /// Restarts the countdown timer
+  void restartTimer() {
+    setState(_setEndTime);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(
-          color: ColorManager.white,
-          width: 1.5,
-        ),
-      ),
+      decoration: _buildDecoration(),
       child: Row(
         children: [
+          // Timer Icon
           Padding(
             padding: const EdgeInsets.only(right: 5),
             child: Icon(
@@ -50,18 +53,33 @@ class CountDownState extends State<CountDown> {
               size: 18.w,
             ),
           ),
+          // Countdown Timer
           TimerCountdown(
             format: CountDownTimerFormat.hoursMinutesSeconds,
             enableDescriptions: false,
-            colonsTextStyle: const TextStyle(color: ColorManager.white),
-            timeTextStyle: const TextStyle(color: ColorManager.white),
+            colonsTextStyle: _buildTextStyle(),
+            timeTextStyle: _buildTextStyle(),
             endTime: _endTime,
-            onEnd: () {
-              widget.timeOut();
-            },
+            onEnd: widget.timeOut,
           ),
         ],
       ),
     );
+  }
+
+  // Builds the BoxDecoration for the container
+  BoxDecoration _buildDecoration() {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(20.0),
+      border: Border.all(
+        color: ColorManager.white,
+        width: 1.5,
+      ),
+    );
+  }
+
+  // Returns a consistent TextStyle for the countdown text
+  TextStyle _buildTextStyle() {
+    return const TextStyle(color: ColorManager.white, fontSize: 14);
   }
 }
