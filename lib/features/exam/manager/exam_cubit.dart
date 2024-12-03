@@ -27,8 +27,7 @@ class ExamCubit extends Cubit<ExamState> {
 
   List<Question> get questions => List.unmodifiable(_questions);
 
-  List<Question> get incorrectQuestionsList =>
-      List.unmodifiable(_incorrectQuestionsList);
+  List<Question> get incorrectQuestionsList => List.unmodifiable(_incorrectQuestionsList);
 
   Certification get certification => _certification;
 
@@ -80,8 +79,7 @@ class ExamCubit extends Cubit<ExamState> {
   /// Adds an incorrectly answered question to the list and emits the updated state.
   void addIncorrectQuestion(Question incorrectQuestion) {
     _incorrectQuestionsList.add(incorrectQuestion);
-    emit(
-        ExamAddedIncorrectQuestion(List.unmodifiable(_incorrectQuestionsList)));
+    emit(ExamAddedIncorrectQuestion(List.unmodifiable(_incorrectQuestionsList)));
   }
 
   /// Resets the exam state to its initial values.

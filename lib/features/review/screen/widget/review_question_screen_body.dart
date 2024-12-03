@@ -21,7 +21,6 @@ class _ReviewQuestionScreenBodyState extends State<ReviewQuestionScreenBody> {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     incorrectQuestions = args['incorrectQuestions'];
-    print("incorrectQuestions: ${incorrectQuestions.length}");
   }
 
   @override

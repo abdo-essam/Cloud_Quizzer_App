@@ -1,5 +1,6 @@
-import 'package:bloc/bloc.dart';
+
 import 'package:cloudquizzer/features/result/manager/result_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../core/models/score.dart';

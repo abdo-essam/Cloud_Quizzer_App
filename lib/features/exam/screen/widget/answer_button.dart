@@ -67,7 +67,6 @@ class _AnswerButtonState extends State<AnswerButton> {
             } else {
               // add Failed Question to the list
               context.read<ExamCubit>().addIncorrectQuestion(widget.question);
-              print(context.read<ExamCubit>().incorrectQuestionsList.length);
               backgroundButtonColor = ColorManager.red; // Incorrect answer
             }
           });

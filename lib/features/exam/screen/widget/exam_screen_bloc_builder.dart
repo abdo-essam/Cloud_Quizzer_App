@@ -1,5 +1,4 @@
 import 'package:cloudquizzer/core/widgets/error_screen.dart';
-import 'package:cloudquizzer/features/home/screen/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,10 +34,13 @@ class ExamScreenBlocBuilder extends StatelessWidget {
       return _buildQuestionScreen(state.questions);
     } else if (state is ExamQuestionIndexUpdated) {
       return _buildQuestionScreen(state.questions);
+    } else if (state is ExamAddedIncorrectQuestion) {
+      debugPrint('An incorrect question was added!');
+      // Provide a widget or action based on this state, if needed
+      return _buildQuestionScreen(context.read<ExamCubit>().questions);
     } else if (state is ExamError) {
       return const ErrorScreen();
-    }
-    else if (state is ExamAddedBookmarkQuestion) {
+    } else if (state is ExamAddedBookmarkQuestion) {
       debugPrint('Question bookmarked successfully!');
     } else {
       throw Exception('Unexpected state: $state');
