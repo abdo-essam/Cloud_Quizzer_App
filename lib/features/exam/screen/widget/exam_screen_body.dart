@@ -30,7 +30,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
     super.didChangeDependencies();
     if (certification == null) {
       final args =
-          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
       certification = args?['certification'];
     }
   }
@@ -90,7 +90,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
             timeOut: _onTimeOut,
           ),
           Text(
-            'Q.${examCubit.index + 1}/${certification?.numOfQuestions ?? 0}',
+            'Q.${examCubit.index + 1}/${examCubit.questions.length ?? 0}',
             style: GoogleFonts.quicksand(
               fontSize: 14.sp,
               fontWeight: FontWeight.w500,
@@ -129,7 +129,7 @@ class _ExamScreenBodyState extends State<ExamScreenBody> {
   List<Widget> _buildAnswerOptions(Question question) {
     return List.generate(
       question.options.length,
-      (i) => AnswerButton(
+          (i) => AnswerButton(
         question: question,
         optionIndex: i,
         certification: certification!,

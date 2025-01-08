@@ -18,11 +18,12 @@ class ExamQuestionIndexUpdated extends ExamState {
   ExamQuestionIndexUpdated({required this.questions});
 }
 
+class ExamTimeOut extends ExamState {}
+
 class ExamIncreaseScore extends ExamState {}
 
 class ExamGetAllQuestions extends ExamState {
-  List<Question> questions;
-
+  final List<Question> questions;
   ExamGetAllQuestions({required this.questions});
 }
 
@@ -43,4 +44,16 @@ class ExamAddedIncorrectQuestion extends ExamState {
 class ExamAddedBookmarkQuestion extends ExamState {
   final String message;
   ExamAddedBookmarkQuestion(this.message);
+}
+
+class ExamCompleted extends ExamState {
+  final int score;
+  final int totalQuestions;
+  final List<Question> incorrectQuestions;
+
+  ExamCompleted({
+    required this.score,
+    required this.totalQuestions,
+    required this.incorrectQuestions,
+  });
 }

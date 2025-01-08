@@ -1,10 +1,11 @@
-import 'package:cloudquizzer/core/widgets/error_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../core/functions/show_back_alert_dialog.dart';
 import '../../../../core/models/questions.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/color_manager.dart';
+import '../../../../core/widgets/error_dialog.dart';
 import '../../../../core/widgets/no_data_founded_screen.dart';
 import '../../manager/exam_cubit.dart';
 import '../../manager/exam_state.dart';
@@ -21,7 +22,6 @@ class ExamScreenBlocBuilder extends StatelessWidget {
     );
   }
 
-  /// Builds the appropriate screen based on the current state.
   Widget _buildStateScreen(BuildContext context, ExamState state) {
     final questions = context.read<ExamCubit>().questions;
     if (state is ExamLoading) {
@@ -35,30 +35,50 @@ class ExamScreenBlocBuilder extends StatelessWidget {
     } else if (state is ExamQuestionIndexUpdated) {
       return _buildQuestionScreen(state.questions);
     } else if (state is ExamAddedIncorrectQuestion) {
-      debugPrint('An incorrect question was added!');
-      // Provide a widget or action based on this state, if needed
       return _buildQuestionScreen(context.read<ExamCubit>().questions);
+    } else if (state is ExamCompleted) {
+      // Handle quiz completion
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _navigateToResults(context, state);
+      });
+      return _buildQuestionScreen(questions);
     } else if (state is ExamError) {
-      return const ErrorScreen();
-    } else if (state is ExamAddedBookmarkQuestion) {
-      debugPrint('Question bookmarked successfully!');
-    } else {
-      throw Exception('Unexpected state: $state');
+      return ErrorDialog(
+        error: state.error,
+        onRetry: () {
+          context.read<ExamCubit>().getQuestions(
+              context.read<ExamCubit>().certification);
+        },
+      );
     }
 
     return _buildQuestionScreen(questions);
   }
 
-  /// Handles side effects when the state changes.
+  void _navigateToResults(BuildContext context, ExamCompleted state) {
+    Navigator.of(context).pushReplacementNamed(
+      Routes.resultScreen,
+      arguments: {
+        'score': state.score,
+        'endIndex': state.totalQuestions - 1,
+        'incorrectQuestions': state.incorrectQuestions,
+        'certification': context.read<ExamCubit>().certification,
+      },
+    );
+  }
+
   void _handleStateListener(BuildContext context, ExamState state) {
     if (state is ExamError) {
       showBackAlertDialog(context, state.error);
     } else if (state is ExamAddedBookmarkQuestion) {
-      debugPrint('Question bookmarked successfully!');
+      Fluttertoast.showToast(
+        msg: "Bookmark Added Successfully",
+        backgroundColor: ColorManager.black,
+        textColor: ColorManager.white,
+      );
     }
   }
 
-  /// Renders the question screen or a "no data" screen if the question list is empty.
   Widget _buildQuestionScreen(List<Question> questions) {
     if (questions.isEmpty) {
       return const NoDataFoundedScreen();

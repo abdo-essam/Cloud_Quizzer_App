@@ -423,7 +423,6 @@ INSERT INTO Questions (question_text, answer_index, options, certification_code)
 ('What is the purpose of AWS Elastic Beanstalk?', 0, 'A. Serverless data integration and ETL,B. Data warehousing,C. Machine learning,D. Serverless computing', 'AWS-CCP'),
 ('Which AWS service is used for managing and deploying serverless applications?', 1, 'A. AWS Lambda,B. Amazon EC2,C. Amazon S3,D. AWS Elastic Beanstalk', 'AWS-CCP'),
 ('What is the purpose of AWS Elastic Beanstalk?', 2, 'A. Serverless data integration and ETL,B. Data warehousing,C. Machine learning,D. Serverless computing', 'AWS-CCP'),
-('Which AWS service is used for managing and deploying serverless applications?', 3, 'A. AWS Lambda,B. Amazon EC2,C. Amazon S3,D. AWS Elastic Beanstalk', 'AWS-CCP');
     """);
   }*/
 
@@ -433,14 +432,14 @@ INSERT INTO Questions (question_text, answer_index, options, certification_code)
     }
   }
 
-  Future<void> insertQuestion(Question question) async {
+/*  Future<void> insertQuestion(Question question) async {
     final db = await database;
     await db.insert(
       'Questions',
       question.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-  }
+  }*/
 
 /*  Future<List<Question>> getQuestionsByCertification(String certificationCode) async {
     final db = await database;
@@ -454,7 +453,7 @@ INSERT INTO Questions (question_text, answer_index, options, certification_code)
     });
   }*/
 
-  Future<List<Question>> getQuestions(String certificationCode) async {
+/*  Future<List<Question>> getQuestions(String certificationCode) async {
     final db = await database;
     List<Map<String, dynamic>> maps = await db.query(
       'Questions',
@@ -465,7 +464,7 @@ INSERT INTO Questions (question_text, answer_index, options, certification_code)
     return List.generate(maps.length, (i) {
       return Question.fromMap(maps[i]);
     });
-  }
+  }*/
 
   Future<void> close() async {
     final db = await database;

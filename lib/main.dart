@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudquizzer/core/theme/color_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +11,25 @@ import 'core/models/bookmark.dart';
 import 'core/models/score.dart';
 import 'core/routes/app_routing.dart';
 import 'core/routes/routes.dart';
+import 'core/utils/question_uploader.dart';
 
 void main() async{
   Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // Enable offline persistence (optional)
+  FirebaseFirestore.instance.settings = Settings(
+    persistenceEnabled: true,
+    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+  );
+  // Upload questions
+  await QuestionUploader.uploadMultiChoiceQuestions();
   Hive.registerAdapter(ScoreAdapter());
   Hive.registerAdapter(BookmarkAdapter());
   await Hive.initFlutter();
   await Hive.openBox('scoresBox');
   await Hive.openBox('bookmarks');
+
   runApp(MyApp(
     appRouting: AppRouting(),
   ));
