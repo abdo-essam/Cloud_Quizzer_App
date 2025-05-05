@@ -1,5 +1,4 @@
 class Certification {
-  // Make it nullable to handle auto-generated IDs
   final String certificationName;
   final int numOfQuestions;
   final int examTime;

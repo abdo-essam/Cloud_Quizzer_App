@@ -1,4 +1,3 @@
-// lib/core/models/mcq_question.dart
 import 'package:cloudquizzer/core/models/questions.dart';
 
 class MCQQuestion extends Question {

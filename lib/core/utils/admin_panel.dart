@@ -1,8 +1,9 @@
-// lib/utils/admin_panel.dart
 import 'package:flutter/material.dart';
 import 'question_uploader.dart';
 
 class AdminPanel extends StatelessWidget {
+  const AdminPanel({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -23,7 +23,7 @@ void main() async{
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
   // Upload questions
-  await QuestionUploader.uploadMultiChoiceQuestions();
+ // await QuestionUploader.uploadMultiChoiceQuestions();
   Hive.registerAdapter(ScoreAdapter());
   Hive.registerAdapter(BookmarkAdapter());
   await Hive.initFlutter();

@@ -1,4 +1,3 @@
-// lib/core/models/boolean_question.dart
 class BooleanQuestion {
   final String questionText;
   final bool answer;
@@ -16,7 +15,6 @@ class BooleanQuestion {
   }
 }
 
-// lib/core/models/mcq_question.dart
 class MCQQuestion {
   final String questionText;
   final int answerIndex;
@@ -37,7 +35,6 @@ class MCQQuestion {
   }
 }
 
-// lib/core/models/mcq_multiple_question.dart
 class MCQMultipleQuestion {
   final String questionText;
   final List<int> correctAnswers;
